@@ -1,1230 +1,888 @@
 <!DOCTYPE html>
 <html lang="id" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecosystem Explorer IPAS Kelas 5 - Rantai Makanan & Jaring-Jaring Makanan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Poppins', sans-serif; }
-        .card-3d {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-3d:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .memory-card {
-            perspective: 1000px;
-        }
-        .memory-card-inner {
-            transition: transform 0.5s;
-            transform-style: preserve-3d;
-        }
-        .memory-card.flipped .memory-card-inner {
-            transform: rotateY(180deg);
-        }
-        .memory-card-front, .memory-card-back {
-            backface-visibility: hidden;
-        }
-        .memory-card-back {
-            transform: rotateY(180deg);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosystem Explorer IPAS Kelas 5 - Rantai Makanan & Jaring-Jaring Makanan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .card-3d { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card-3d:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+    .memory-card { perspective: 1000px; }
+    .memory-card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+    .memory-card.flipped .memory-card-inner { transform: rotateY(180deg); }
+    .memory-card-front, .memory-card-back { backface-visibility: hidden; }
+    .memory-card-back { transform: rotateY(180deg); }
+  </style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800 flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
 
-    <header class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur shadow-inner">
-                    <i class="fa-solid fa-leaf text-2xl text-emerald-200"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">Ecosystem Explorer</h1>
-                    <p class="text-xs text-emerald-100 font-medium">IPAS Kelas 5 SD / MI - Kurikulum Merdeka</p>
-                </div>
-            </div>
-
-            <!-- Navigation & Sound Switch -->
-            <div class="flex items-center space-x-3">
-                <!-- Sound Toggle Button -->
-                <button onclick="toggleAudio()" id="soundToggleBtn" class="px-3 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-bold transition flex items-center space-x-2 border border-white/30">
-                    <i class="fa-solid fa-volume-high text-amber-300" id="soundIcon"></i>
-                    <span id="soundText">Suara: ON</span>
-                </button>
-
-                <nav class="flex items-center space-x-1.5 overflow-x-auto py-1">
-                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold bg-white/20 backdrop-blur transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-house"></i><span>Beranda</span>
-                    </button>
-                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-book-open"></i><span>Materi</span>
-                    </button>
-                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-gamepad"></i><span>Kuis (25 Soal)</span>
-                    </button>
-                    <button onclick="switchTab('minigame')" id="nav-minigame" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-brain"></i><span>Ingatan Gambar</span>
-                    </button>
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5 bg-amber-500/30">
-                        <i class="fa-solid fa-chalkboard-user"></i><span>Guru</span>
-                    </button>
-                </nav>
-            </div>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur shadow-inner">
+          <i class="fa-solid fa-leaf text-2xl text-emerald-200"></i>
         </div>
-    </header>
-
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
-
-        <!-- STUDENT REGISTRATION HOME -->
-        <section id="tab-home" class="tab-content space-y-6">
-            <div class="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
-                    <i class="fa-solid fa-earth-asia"></i>
-                </div>
-                <div class="max-w-2xl relative z-10 space-y-4">
-                    <span class="bg-emerald-400/30 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-400/40">Bab 3 Harmoni dalam Ekosistem</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Rantai & Jaring-Jaring Makanan Kelas 5</h2>
-                    <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
-                        Pelajari materi interaktif IPAS Kelas 5 yang telah diperluas. Uji pemahamanmu lewat <strong>25 kuis bergambar</strong> bergaransi 3 nyawa dengan jawaban acak dan efek suara, serta latih ingatanmu lewat Mini Game Acak Gambar!
-                    </p>
-                    
-                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 mt-4 space-y-3">
-                        <label class="block text-sm font-semibold text-emerald-100">Masukkan Nama Lengkap Siswa untuk Absensi & Sertifikat:</label>
-                        <div class="flex flex-col sm:flex-row gap-3">
-                            <input type="text" id="studentNameInput" placeholder="Contoh: Salsabila Putri" class="flex-grow bg-white/95 text-slate-800 px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-emerald-300 shadow-sm">
-                            <button onclick="registerStudent()" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-play"></i><span>Mulai Belajar</span>
-                            </button>
-                        </div>
-                        <div id="studentGreeting" class="text-xs text-emerald-200 hidden">
-                            Halo, <span id="displayNameBadge" class="font-bold underline"></span>! Data nilai kuis dan sertifikatmu siap direkam.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Feature Navigation Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div onclick="switchTab('materi')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
-                    <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 text-xl mb-4 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-book-bookmark"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-800">Materi Terlengkap & Mendalam</h3>
-                    <p class="text-slate-500 text-sm mt-1">Ekosistem, Produsen, Konsumen I-IV, Pengurai, Aliran Energi, Piramida Makanan & Keseimbangan Lingkungan.</p>
-                </div>
-                <div onclick="switchTab('quiz')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
-                    <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 text-xl mb-4 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-list-check"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-800">25 Kuis Bergambar & Acak</h3>
-                    <p class="text-slate-500 text-sm mt-1">Soal-soal interaktif bergambar, opsi jawaban diacak otomatis, efek suara, dan 3 nyawa.</p>
-                </div>
-                <div onclick="switchTab('minigame')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
-                    <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600 text-xl mb-4 group-hover:scale-110 transition">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-800">Game Memory Acak Gambar</h3>
-                    <p class="text-slate-500 text-sm mt-1">Game kartu acak bergambar komponen ekosistem untuk mengasah daya ingat siswa.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-materi" class="tab-content hidden space-y-8">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                <div class="border-b pb-4 flex justify-between items-center flex-wrap gap-4">
-                    <div>
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">BAB 3 IPAS KELAS 5 KURIKULUM MERDEKA</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-1">Materi Rinci Harmoni Ekosistem</h2>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="setMateriSub('dasar')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 text-white shadow">Komponen Ekosistem</button>
-                        <button onclick="setMateriSub('rantai')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Rantai Makanan</button>
-                        <button onclick="setMateriSub('jaring')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Jaring Makanan</button>
-                        <button onclick="setMateriSub('energi')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Aliran & Piramida</button>
-                        <button onclick="setMateriSub('keseimbangan')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Keseimbangan</button>
-                    </div>
-                </div>
-
-                <!-- 0. Komponen Ekosistem -->
-                <div id="sub-dasar" class="materi-pane space-y-6">
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2">
-                            <i class="fa-solid fa-tree"></i><span>1. Komponen Biotik & Abiotik</span>
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            <strong>Ekosistem</strong> adalah hubungan timbal balik antara makhluk hidup dengan lingkungannya. Ekosistem tersusun dari dua komponen utama:
-                        </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 space-y-2">
-                                <h4 class="font-bold text-emerald-800 flex items-center"><i class="fa-solid fa-bug mr-2"></i>Komponen Biotik (Makhluk Hidup)</h4>
-                                <p class="text-xs text-slate-600 leading-relaxed">Seluruh makhluk hidup di dalam ekosistem. Terbagi menjadi:</p>
-                                <ul class="list-disc list-inside text-xs text-slate-700 space-y-1">
-                                    <li><strong>Produsen:</strong> Tumbuhan hijau, fitoplankton, alga.</li>
-                                    <li><strong>Konsumen:</strong> Hewan pemakan tumbuhan (Herbivora), pemakan daging (Karnivora), dan pemakan segalanya (Omnivora).</li>
-                                    <li><strong>Pengurai (Dekomposer):</strong> Bakteri & jamur pemakan zat organik mati.</li>
-                                </ul>
-                            </div>
-                            <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 space-y-2">
-                                <h4 class="font-bold text-teal-800 flex items-center"><i class="fa-solid fa-sun mr-2"></i>Komponen Abiotik (Benda Tak Hidup)</h4>
-                                <p class="text-xs text-slate-600 leading-relaxed">Faktor lingkungan fisik yang mendukung kehidupan:</p>
-                                <ul class="list-disc list-inside text-xs text-slate-700 space-y-1">
-                                    <li><strong>Cahaya Matahari:</strong> Sumber energi utama fotosintesis.</li>
-                                    <li><strong>Air & Udara:</strong> Kebutuhan dasar respirasi & metabolisme.</li>
-                                    <li><strong>Tanah & Suhu:</strong> Tempat tumbuh & menjaga kelangsungan hidup.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 1. Rantai Makanan -->
-                <div id="sub-rantai" class="materi-pane hidden space-y-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                        <div class="space-y-4">
-                            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2">
-                                <i class="fa-solid fa-seedling"></i><span>2. Peristiwa Rantai Makanan</span>
-                            </h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                Rantai makanan adalah proses makan dan dimakan antarmakhluk hidup dengan urutan tertentu. Dalam urutan ini terjadi perpindahan nutrisi dan energi.
-                            </p>
-                            <ul class="space-y-2 text-xs text-slate-700">
-                                <li class="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
-                                    <strong>Produsen:</strong> Padi/Tumbuhan hijau yang mengolah makanan sendiri.
-                                </li>
-                                <li class="bg-teal-50 p-3 rounded-xl border border-teal-100">
-                                    <strong>Konsumen I (Herbivora):</strong> Belalang/Ulat/Tikus pemakan produsen.
-                                </li>
-                                <li class="bg-cyan-50 p-3 rounded-xl border border-cyan-100">
-                                    <strong>Konsumen II (Karnivora/Omnivora):</strong> Katak/Ayam pemakan konsumen I.
-                                </li>
-                                <li class="bg-amber-50 p-3 rounded-xl border border-amber-100">
-                                    <strong>Konsumen III / Puncak:</strong> Ular, Elang, Burung Hantu.
-                                </li>
-                                <li class="bg-purple-50 p-3 rounded-xl border border-purple-100">
-                                    <strong>Pengurai:</strong> Jamur & bakteri pengurai bangkai menjadi humus.
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="bg-gradient-to-br from-slate-900 to-emerald-950 p-6 rounded-3xl text-white shadow-xl flex flex-col items-center justify-center space-y-4">
-                            <h4 class="font-bold text-emerald-300 text-center">Urutan Peran Rantai Makanan Sawah</h4>
-                            <div class="grid grid-cols-5 gap-2 text-center items-center w-full max-w-md">
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-sun text-amber-400 text-xl block mb-1"></i><span class="text-[10px] font-bold">Matahari</span></div>
-                                <i class="fa-solid fa-arrow-right text-emerald-400"></i>
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-wheat-awn text-amber-300 text-xl block mb-1"></i><span class="text-[10px] font-bold">Padi</span></div>
-                                <i class="fa-solid fa-arrow-right text-emerald-400"></i>
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-locust text-emerald-400 text-xl block mb-1"></i><span class="text-[10px] font-bold">Belalang</span></div>
-                            </div>
-                            <div class="grid grid-cols-5 gap-2 text-center items-center w-full max-w-md">
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-frog text-emerald-300 text-xl block mb-1"></i><span class="text-[10px] font-bold">Katak</span></div>
-                                <i class="fa-solid fa-arrow-left text-emerald-400"></i>
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-bacteria text-purple-300 text-xl block mb-1"></i><span class="text-[10px] font-bold">Pengurai</span></div>
-                                <i class="fa-solid fa-arrow-left text-emerald-400"></i>
-                                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fa-solid fa-crow text-rose-400 text-xl block mb-1"></i><span class="text-[10px] font-bold">Elang</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Jaring-Jaring Makanan -->
-                <div id="sub-jaring" class="materi-pane hidden space-y-6">
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2">
-                            <i class="fa-solid fa-network-wired"></i><span>3. Jaring-Jaring Makanan</span>
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            Satu jenis konsumen tidak hanya memakan satu jenis makanan. Gabungan dari beberapa rantai makanan yang saling berhubungan di alam dinamakan <strong>jaring-jaring makanan</strong>.
-                        </p>
-                        <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-lg space-y-3">
-                            <h4 class="font-bold text-emerald-400"><i class="fa-solid fa-diagram-project mr-2"></i>Contoh Keterhubungan Ekosistem Laut:</h4>
-                            <ul class="list-disc list-inside text-xs space-y-2 text-slate-300">
-                                <li>Fitoplankton ➔ Zooplankton ➔ Ikan Kecil ➔ Ikan Besar ➔ Hiu</li>
-                                <li>Fitoplankton ➔ Udang ➔ Ikan Sedang ➔ Burung Camar</li>
-                                <li>Rumput Laut ➔ Penyu ➔ Hiu</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Aliran Energi & Piramida -->
-                <div id="sub-energi" class="materi-pane hidden space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 space-y-3">
-                            <h4 class="font-bold text-emerald-800 text-lg"><i class="fa-solid fa-bolt mr-2"></i>Aliran Energi</h4>
-                            <p class="text-slate-700 text-xs leading-relaxed">
-                                Energi berasal dari matahari, diserap produsen, lalu berpindah ke konsumen. Namun, sekitar 90% energi hilang sebagai energi panas dan metabolik di setiap tingkatan. Hanya sekitar 10% energi yang diteruskan ke tingkat berikutnya.
-                            </p>
-                        </div>
-                        <div class="bg-teal-50 p-6 rounded-3xl border border-teal-100 space-y-3">
-                            <h4 class="font-bold text-teal-800 text-lg"><i class="fa-solid fa-mountain mr-2"></i>Piramida Makanan</h4>
-                            <p class="text-slate-700 text-xs leading-relaxed">
-                                Gambaran bertingkat jumlah biomassa dan energi. Tingkat paling bawah (Produsen) memiliki jumlah terbanyak dan energi terbesar. Semakin ke puncak, jumlah organisme dan energinya semakin berkurang.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Keseimbangan Ekosistem -->
-                <div id="sub-keseimbangan" class="materi-pane hidden space-y-6">
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2">
-                            <i class="fa-solid fa-scale-balanced"></i><span>5. Keseimbangan & Perubahan Ekosistem</span>
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            Ekosistem dikatakan seimbang jika jumlah produsen lebih banyak daripada konsumen. Perubahan ekosistem dapat disebabkan oleh dua faktor utama:
-                        </p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
-                                <h4 class="font-bold text-amber-800 text-sm mb-1"><i class="fa-solid fa-volcano mr-2"></i>1. Bencana Alam</h4>
-                                <p class="text-xs text-slate-600">Letusan gunung berapi, banjir, gempa bumi, dan kemarau panjang dapat memutus rantai makanan secara alami.</p>
-                            </div>
-                            <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200">
-                                <h4 class="font-bold text-rose-800 text-sm mb-1"><i class="fa-solid fa-industry mr-2"></i>2. Ulah Manusia</h4>
-                                <p class="text-xs text-slate-600">Penebangan liar, perburuan liar, penggunaan pestisida berlebihan, dan pencemaran limbah mengganggu keseimbangan ekosistem.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-quiz" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                <!-- Header & Stats -->
-                <div class="flex flex-wrap justify-between items-center bg-slate-100 p-4 rounded-2xl gap-4">
-                    <div>
-                        <h2 class="text-xl font-extrabold text-slate-800"><i class="fa-solid fa-clipboard-question text-emerald-600 mr-2"></i>Asesmen Kuis Interaktif (25 Soal Bergambar)</h2>
-                        <p class="text-xs text-slate-500">Opsi jawaban diacak otomatis | Dilengkapi Visual Gambar, Pembahasan & 3 Nyawa</p>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <div id="livesContainer" class="flex space-x-1 text-rose-500 text-xl" title="Sisa Nyawa">
-                            <i class="fa-solid fa-heart"></i>
-                            <i class="fa-solid fa-heart"></i>
-                            <i class="fa-solid fa-heart"></i>
-                        </div>
-                        <div class="bg-emerald-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow">
-                            Poin: <span id="quizScore">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quiz Box -->
-                <div id="quizBox" class="space-y-6">
-                    <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
-                        <span id="questionProgress">Soal 1 dari 25</span>
-                        <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-shuffle mr-1"></i>Jawaban Diacak</span>
-                    </div>
-
-                    <!-- Question Container with Visual Image/Icon Card -->
-                    <div class="bg-emerald-50/60 p-6 rounded-2xl border border-emerald-100 flex flex-col md:flex-row gap-6 items-center">
-                        <div id="questionVisual" class="w-28 h-28 bg-white rounded-2xl shadow-sm border border-emerald-200 flex items-center justify-center text-emerald-600 text-5xl flex-shrink-0">
-                            <i class="fa-solid fa-seedling"></i>
-                        </div>
-                        <div class="space-y-2 flex-grow">
-                            <h3 id="questionText" class="text-base sm:text-lg font-bold text-slate-800 leading-snug">
-                                Memuat soal...
-                            </h3>
-                        </div>
-                    </div>
-
-                    <!-- Options Grid -->
-                    <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Options injected dynamically -->
-                    </div>
-
-                    <!-- Explanation Box -->
-                    <div id="explanationBox" class="hidden p-5 rounded-2xl bg-amber-50 border border-amber-200 text-slate-700 text-sm space-y-2 shadow-sm">
-                        <div class="font-bold text-amber-800 flex items-center space-x-2">
-                            <i class="fa-solid fa-circle-info"></i><span id="explanationTitle">Pembahasan:</span>
-                        </div>
-                        <p id="explanationText" class="text-slate-600 text-xs sm:text-sm leading-relaxed"></p>
-                        <button onclick="nextQuizQuestion()" class="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition flex items-center space-x-2">
-                            <span>Lanjut Soal Berikutnya</span><i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Quiz Completion -->
-                <div id="quizResultBox" class="hidden text-center space-y-6 py-8">
-                    <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800" id="resultTitle">Kuis Selesai!</h3>
-                    <p id="finalScoreText" class="text-slate-600 font-semibold text-lg">Poin akhir kamu: 0</p>
-                    <p id="resultDesc" class="text-xs text-slate-500 max-w-md mx-auto"></p>
-                    <div class="flex justify-center gap-4 flex-wrap">
-                        <button id="certClaimBtn" onclick="openCertificate()" class="hidden bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:opacity-95 transition">
-                            <i class="fa-solid fa-certificate mr-2"></i>Unduh Sertifikat Kelulusan Resmi
-                        </button>
-                        <button onclick="restartQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl transition">
-                            Ulangi Kuis (Acak Soal Baru)
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-minigame" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                <div class="flex flex-wrap justify-between items-center border-b pb-4 gap-4">
-                    <div>
-                        <h2 class="text-2xl font-extrabold text-slate-800"><i class="fa-solid fa-brain text-amber-500 mr-2"></i>Mini Game: Acak & Cocokkan Gambar</h2>
-                        <p class="text-xs text-slate-500">Latih ingatan daya pikir siswa dengan mencocokkan pasangan kartu komponen ekosistem!</p>
-                    </div>
-                    <button onclick="initMemoryGame()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow hover:bg-emerald-700 transition flex items-center space-x-2">
-                        <i class="fa-solid fa-rotate-right"></i><span>Acak Ulang Kartu</span>
-                    </button>
-                </div>
-
-                <!-- Memory Game Stats -->
-                <div class="flex justify-between items-center bg-slate-100 p-4 rounded-2xl text-xs sm:text-sm font-bold text-slate-700">
-                    <div><i class="fa-solid fa-stopwatch text-emerald-600 mr-1.5"></i>Langkah: <span id="memoryMoves" class="text-emerald-700">0</span></div>
-                    <div><i class="fa-solid fa-check-double text-teal-600 mr-1.5"></i>Pasangan Ditemukan: <span id="memoryMatches" class="text-teal-700">0 / 6</span></div>
-                </div>
-
-                <!-- Memory Grid -->
-                <div id="memoryGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto py-4">
-                    <!-- Cards will be injected dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-dashboard" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                <div class="border-b pb-4 flex justify-between items-center flex-wrap gap-4">
-                    <div>
-                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">AREA GURU</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-1">Dashboard Pemantauan Nilai Siswa</h2>
-                    </div>
-                    <div id="authStatusBadge" class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg font-medium text-slate-600">
-                        Status: Terkunci (Masukkan PIN)
-                    </div>
-                </div>
-
-                <!-- PIN Lock -->
-                <div id="pinLockBox" class="max-w-md mx-auto bg-slate-50 p-8 rounded-3xl border border-slate-200 text-center space-y-4 shadow-sm">
-                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-800">Masukkan PIN Guru</h3>
-                    <p class="text-xs text-slate-500">PIN Standar: <span class="font-bold text-slate-700">123456</span></p>
-                    <input type="password" id="teacherPinInput" maxlength="6" placeholder="Masukkan 6 digit PIN" class="w-full text-center tracking-widest text-xl bg-white border border-slate-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400">
-                    <button onclick="verifyTeacherPin()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl shadow transition">
-                        Buka Dashboard
-                    </button>
-                </div>
-
-                <!-- Data Table -->
-                <div id="dashboardContent" class="hidden space-y-6">
-                    <div class="flex justify-between items-center">
-                        <p class="text-sm text-slate-600">Data pengerjaan siswa secara real-time:</p>
-                        <button onclick="loadStudentData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow flex items-center space-x-2">
-                            <i class="fa-solid fa-rotate"></i><span>Segarkan Data</span>
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100 text-slate-700 text-xs uppercase tracking-wider">
-                                    <th class="p-4">Nama Siswa</th>
-                                    <th class="p-4">Poin Kuis</th>
-                                    <th class="p-4">Status Kelulusan</th>
-                                    <th class="p-4">Waktu</th>
-                                    <th class="p-4">ID Unik Sesi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="studentTableBody" class="divide-y divide-slate-100 text-sm">
-                                <tr>
-                                    <td colspan="5" class="p-6 text-center text-slate-400">Memuat data...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <div id="certificateModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl border-4 border-amber-400 text-center space-y-6 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-amber-400 text-slate-950 font-extrabold text-xs px-4 py-1.5 rounded-bl-2xl shadow">
-                SERTIFIKAT RESMI KELAS 5
-            </div>
-            <div class="space-y-2">
-                <i class="fa-solid fa-award text-5xl text-amber-500"></i>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">Sertifikat Kelulusan IPAS</h3>
-                <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Diberikan Dengan Bangga Kepada:</p>
-            </div>
-            <div class="text-3xl sm:text-4xl font-black text-emerald-600 underline decoration-amber-400 py-2" id="certStudentName">
-                Nama Siswa
-            </div>
-            <p class="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
-                Telah tuntas mempelajari modul Harmoni dalam Ekosistem dan berhasil menyelesaikan seluruh soal kuis dengan perolehan prestasi gemilang.
-            </p>
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex justify-around text-xs text-slate-600">
-                <div><strong>Total Poin Diperoleh:</strong> <span id="certScore" class="text-emerald-600 font-bold text-base">100</span> / 100</div>
-                <div><strong>Tanggal:</strong> <span id="certDate" class="font-bold">14 Oktober 2026</span></div>
-            </div>
-            <div class="flex justify-center gap-4 pt-2">
-                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow transition">
-                    <i class="fa-solid fa-print mr-2"></i>Cetak / Simpan PDF
-                </button>
-                <button onclick="closeCertificate()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl transition">
-                    Tutup
-                </button>
-            </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Ecosystem Explorer</h1>
+          <p class="text-xs text-emerald-100 font-medium">IPAS Kelas 5 SD / MI - Kurikulum Merdeka</p>
         </div>
+      </div>
+      
+      <!-- Navigation & Sound Switch -->
+      <div class="flex items-center space-x-3">
+        <button onclick="toggleAudio()" id="soundToggleBtn" class="px-3 py-1.5 rounded-xl bg-white/25 hover:bg-white/35 text-white text-xs font-bold transition flex items-center space-x-2 border border-white/30">
+          <i class="fa-solid fa-volume-high text-amber-300" id="soundIcon"></i>
+          <span id="soundText">Suara: ON</span>
+        </button>
+
+        <nav class="flex items-center space-x-1.5 overflow-x-auto py-1">
+          <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold bg-white/25 backdrop-blur transition flex items-center space-x-1.5"><i class="fa-solid fa-house"></i><span>Beranda</span></button>
+          <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5"><i class="fa-solid fa-book-open"></i><span>Materi</span></button>
+          <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5"><i class="fa-solid fa-gamepad"></i><span>Kuis (25 Soal)</span></button>
+          <button onclick="switchTab('minigame')" id="nav-minigame" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center space-x-1.5"><i class="fa-solid fa-brain"></i><span>Ingatan Gambar</span></button>
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-amber-500 transition flex items-center space-x-1.5"><i class="fa-solid fa-chalkboard-user"></i><span>Guru</span></button>
+        </nav>
+      </div>
     </div>
+  </header>
 
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center border-t border-slate-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="text-sm font-semibold text-slate-200">Ecosystem Explorer - IPAS Kelas 5 Kurikulum Merdeka</p>
-            <p class="text-xs text-emerald-400 font-bold">Pengembang: GIGA INOVATION | Kontak: 081329200985</p>
-            <p class="text-xs text-slate-500">&copy; 2026 Giga Innovation. All rights reserved.</p>
+  <!-- Main Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+    <!-- TAB BERANDA -->
+    <section id="tab-home" class="tab-content space-y-6">
+      <div class="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl"><i class="fa-solid fa-earth-asia"></i></div>
+        <div class="max-w-2xl relative z-10 space-y-4">
+          <span class="bg-emerald-400/30 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-400/40">Bab 3 Harmoni dalam Ekosistem</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Rantai & Jaring-Jaring Makanan Kelas 5</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+            Mari menjelajahi keajaiban ekosistem! Pelajari materi interaktif, mainkan kuis bergambar seru dengan 3 nyawa & pembahasan, serta latih daya ingat dengan game memori ekosistem.
+          </p>
+
+          <!-- Input Nama Siswa -->
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 space-y-3">
+            <label class="block text-sm font-semibold text-emerald-100">Masukkan Nama Lengkap Siswa untuk Memulai & Sertifikat:</label>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input type="text" id="studentNameInput" placeholder="Contoh: Salsabila Putri" class="flex-grow bg-white/95 text-slate-800 px-4 py-3 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-emerald-400">
+              <button onclick="registerStudent()" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-play"></i><span>Mulai Belajar</span>
+              </button>
+            </div>
+            <div id="studentGreeting" class="text-xs text-emerald-200 hidden">
+              Halo, <span id="displayNameBadge" class="font-bold underline"></span>! Data nilai kuis dan sertifikatmu siap direkam.
+            </div>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        // Web Audio Synthesizer for SFX
-        let audioEnabled = true;
-        let audioCtx = null;
+      <!-- Fitur Navigasi Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="switchTab('materi')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
+          <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 text-xl mb-4 group-hover:scale-110 transition"><i class="fa-solid fa-book-bookmark"></i></div>
+          <h3 class="font-bold text-lg text-slate-800">Materi Terlengkap & Mendalam</h3>
+          <p class="text-slate-500 text-sm mt-1">Ekosistem, Produsen, Konsumen I-IV, Pengurai, Aliran Energi, Piramida Makanan & Keseimbangan Lingkungan.</p>
+        </div>
+        <div onclick="switchTab('quiz')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
+          <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 text-xl mb-4 group-hover:scale-110 transition"><i class="fa-solid fa-list-check"></i></div>
+          <h3 class="font-bold text-lg text-slate-800">25 Kuis Bergambar & Acak</h3>
+          <p class="text-slate-500 text-sm mt-1">Soal-soal interaktif bergambar, opsi jawaban diacak otomatis, efek suara, pembahasan, dan 3 nyawa.</p>
+        </div>
+        <div onclick="switchTab('minigame')" class="card-3d bg-white p-6 rounded-2xl shadow-sm border border-slate-100 cursor-pointer group">
+          <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600 text-xl mb-4 group-hover:scale-110 transition"><i class="fa-solid fa-brain"></i></div>
+          <h3 class="font-bold text-lg text-slate-800">Game Memori Acak Gambar</h3>
+          <p class="text-slate-500 text-sm mt-1">Game kartu acak bergambar komponen ekosistem untuk mengasah daya ingat siswa.</p>
+        </div>
+      </div>
+    </section>
 
-        function getAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            return audioCtx;
-        }
+    <!-- TAB MATERI -->
+    <section id="tab-materi" class="tab-content hidden space-y-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+        <div class="border-b pb-4 flex justify-between items-center flex-wrap gap-4">
+          <div>
+            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">BAB 3 IPAS KELAS 5 KURIKULUM MERDEKA</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-1">Materi Rinci Harmoni Ekosistem</h2>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="setMateriSub('dasar')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 text-white shadow">Komponen Ekosistem</button>
+            <button onclick="setMateriSub('rantai')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Rantai Makanan</button>
+            <button onclick="setMateriSub('jaring')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Jaring Makanan</button>
+            <button onclick="setMateriSub('energi')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Aliran & Piramida</button>
+            <button onclick="setMateriSub('keseimbangan')" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Keseimbangan</button>
+          </div>
+        </div>
 
-        function playSound(type) {
-            if (!audioEnabled) return;
-            try {
-                const ctx = getAudioContext();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
+        <!-- Sub 1: Komponen Ekosistem -->
+        <div id="sub-dasar" class="materi-pane space-y-6">
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2"><i class="fa-solid fa-tree"></i><span>1. Komponen Biotik & Abiotik</span></h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              <strong>Ekosistem</strong> adalah hubungan timbal balik antara makhluk hidup dengan lingkungannya. Dalam suatu ekosistem, terdapat dua komponen utama:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+              <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-100 space-y-2">
+                <h4 class="font-bold text-emerald-800"><i class="fa-solid fa-paw mr-2"></i>Komponen Biotik (Makhluk Hidup)</h4>
+                <p class="text-xs sm:text-sm text-slate-600">Seluruh makhluk hidup di dalam ekosistem yang dikelompokkan menjadi:</p>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 space-y-1">
+                  <li><strong>Produsen:</strong> Tumbuhan hijau yang mampu membuat makanan sendiri lewat fotosintesis.</li>
+                  <li><strong>Konsumen:</strong> Hewan dan manusia yang memakan makhluk hidup lain.</li>
+                  <li><strong>Pengurai (Dekomposer):</strong> Jamur dan bakteri pengurai sisa makhluk hidup mati.</li>
+                </ul>
+              </div>
+              <div class="bg-cyan-50/70 p-5 rounded-2xl border border-cyan-100 space-y-2">
+                <h4 class="font-bold text-cyan-800"><i class="fa-solid fa-sun mr-2"></i>Komponen Abiotik (Benda Tak Hidup)</h4>
+                <p class="text-xs sm:text-sm text-slate-600">Faktor lingkungan tak hidup yang mempengaruhi kelangsungan hidup makhluk hidup, seperti:</p>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 space-y-1">
+                  <li>Cahaya Matahari (sumber energi utama fotosintesis)</li>
+                  <li>Air, Tanah, Udara / Oksigen</li>
+                  <li>Suhu, Kelembapan, dan Topografi</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                if (type === 'correct') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-                    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.3); // A5
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.3);
-                } else if (type === 'wrong') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
-                    osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3); // A2
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.3);
-                } else if (type === 'click') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(400, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.05);
-                } else if (type === 'win') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(440, ctx.currentTime);
-                    osc.frequency.setValueAtTime(554.37, ctx.currentTime + 0.1);
-                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2);
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.5);
-                }
-            } catch(e) { console.log('Audio error:', e); }
-        }
+        <!-- Sub 2: Rantai Makanan -->
+        <div id="sub-rantai" class="materi-pane hidden space-y-6">
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2"><i class="fa-solid fa-link"></i><span>2. Rantai Makanan & Peran Tingkat Trophic</span></h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              <strong>Rantai Makanan</strong> adalah peristiwa makan dan dimakan antar makhluk hidup dalam suatu ekosistem dengan urutan tertentu.
+            </p>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+              <h4 class="font-bold text-slate-800">Contoh Rantai Makanan di Kebun:</h4>
+              <div class="flex flex-wrap items-center gap-2 text-sm font-semibold bg-white p-4 rounded-xl shadow-sm">
+                <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-lg">Tanaman Tomat (Produsen)</span>
+                <i class="fa-solid fa-arrow-right text-slate-400"></i>
+                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-lg">Ulat (Konsumen I)</span>
+                <i class="fa-solid fa-arrow-right text-slate-400"></i>
+                <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-lg">Bunglon (Konsumen II)</span>
+                <i class="fa-solid fa-arrow-right text-slate-400"></i>
+                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-lg">Ular (Konsumen III)</span>
+                <i class="fa-solid fa-arrow-right text-slate-400"></i>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-lg">Burung Hantu (Konsumen Puncak)</span>
+              </div>
+              <ul class="list-disc list-inside text-xs sm:text-sm text-slate-600 space-y-1">
+                <li><strong>Produsen:</strong> Membuat makanan sendiri melalui fotosintesis.</li>
+                <li><strong>Konsumen I (Herbivora/Omnivora):</strong> Memakan tumbuhan (contoh: ulat, belalang, kelinci, tikus).</li>
+                <li><strong>Konsumen II & III (Karnivora):</strong> Memakan konsumen di bawahnya.</li>
+                <li><strong>Konsumen Puncak:</strong> Hewan teratas yang tidak dimangsa oleh hewan lain.</li>
+                <li><strong>Pengurai:</strong> Menguraikan bangkai hewan/tumbuhan menjadi zat hara tanah.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const icon = document.getElementById('soundIcon');
-            const text = document.getElementById('soundText');
-            if(audioEnabled) {
-                icon.className = "fa-solid fa-volume-high text-amber-300";
-                text.innerText = "Suara: ON";
-                playSound('click');
-            } else {
-                icon.className = "fa-solid fa-volume-xmark text-slate-300";
-                text.innerText = "Suara: OFF";
-            }
-        }
+        <!-- Sub 3: Jaring-Jaring Makanan -->
+        <div id="sub-jaring" class="materi-pane hidden space-y-6">
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2"><i class="fa-solid fa-network-wired"></i><span>3. Jaring-Jaring Makanan</span></h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Di dalam ekosistem, makhluk hidup biasanya tidak hanya memakan satu jenis makanan saja. Kumpulan dari beberapa rantai makanan yang saling berhubungan dan kompleks disebut <strong>Jaring-Jaring Makanan</strong>.
+            </p>
+            <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 space-y-3">
+              <h4 class="font-bold text-emerald-900">Perbedaan Utama:</h4>
+              <p class="text-xs sm:text-sm text-slate-600">
+                Jika rantai makanan berbentuk garis lurus (linier) satu arah, maka jaring-jaring makanan berbentuk bercabang-cabang karena satu hewan bisa memangsa lebih dari satu jenis hewan dan berada di tingkat trofik yang berbeda-beda.
+              </p>
+            </div>
+          </div>
+        </div>
 
-        function switchTab(tabId) {
-            playSound('click');
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-white/20'));
-            const activeBtn = document.getElementById('nav-' + tabId);
-            if(activeBtn) activeBtn.classList.add('bg-white/20');
+        <!-- Sub 4: Aliran Energi & Piramida -->
+        <div id="sub-energi" class="materi-pane hidden space-y-6">
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2"><i class="fa-solid fa-bolt"></i><span>4. Aliran Energi & Piramida Makanan</span></h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              <strong>Aliran Energi</strong> adalah perpindahan energi dari matahari ke produsen lalu ke konsumen. Semakin ke tingkat konsumen puncak, jumlah energi dan jumlah individu makhluk hidup akan semakin sedikit (membentuk <strong>Piramida Makanan</strong>).
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                <h4 class="font-bold text-slate-800 mb-2">Tingkatan Trofik Piramida:</h4>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-slate-600 space-y-1">
+                  <li><strong>Tingkat IV:</strong> Konsumen Puncak (energi paling sedikit)</li>
+                  <li><strong>Tingkat III:</strong> Konsumen Tingkat II / III</li>
+                  <li><strong>Tingkat II:</strong> Konsumen Tingkat I (Herbivora)</li>
+                  <li><strong>Tingkat I:</strong> Produsen (jumlah dan energi paling besar)</li>
+                </ul>
+              </div>
+              <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-200">
+                <h4 class="font-bold text-cyan-900 mb-2">Kenapa Energi Berkurang?</h4>
+                <p class="text-xs sm:text-sm text-slate-600">
+                  Sebagian besar energi terpakai untuk aktivitas makhluk hidup (bergerak, bernapas) dan dilepaskan ke lingkungan dalam bentuk panas. Hanya sebagian kecil yang tersimpan di dalam tubuh.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            if(tabId === 'minigame') {
-                initMemoryGame();
-            }
+        <!-- Sub 5: Keseimbangan -->
+        <div id="sub-keseimbangan" class="materi-pane hidden space-y-6">
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-emerald-700 flex items-center space-x-2"><i class="fa-solid fa-scale-balanced"></i><span>5. Keseimbangan Ekosistem & Perubahan</span></h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Ekosistem dikatakan seimbang jika jumlah produsen dan konsumen berada dalam proporsi yang stabil. Namun, keseimbangan ini dapat terganggu oleh:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-rose-50 p-5 rounded-2xl border border-rose-200">
+                <h4 class="font-bold text-rose-800 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Faktor Manusia</h4>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-slate-600 space-y-1">
+                  <li>Penebangan hutan & perburuan liar</li>
+                  <li>Penggunaan pestisida berlebihan</li>
+                  <li>Pencemaran lingkungan & sampah plastik</li>
+                </ul>
+              </div>
+              <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
+                <h4 class="font-bold text-amber-800 mb-2"><i class="fa-solid fa-cloud-bolt mr-2"></i>Faktor Alam</h4>
+                <ul class="list-disc list-inside text-xs sm:text-sm text-slate-600 space-y-1">
+                  <li>Bencana alam (letusan gunung berapi, banjir, gempa)</li>
+                  <li>Perubahan musim ekstrem / kemarau panjang</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+      </div>
+    </section>
 
-        function setMateriSub(subId) {
-            playSound('click');
-            document.querySelectorAll('.materi-pane').forEach(p => p.classList.add('hidden'));
-            document.getElementById('sub-' + subId).classList.remove('hidden');
+    <!-- TAB KUIS (25 SOAL) -->
+    <section id="tab-quiz" class="tab-content hidden space-y-6">
+      <div id="quizContainer" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+        
+        <!-- Quiz Header / HUD -->
+        <div class="flex justify-between items-center flex-wrap gap-4 border-b pb-4">
+          <div>
+            <span class="text-xs font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full"><i class="fa-solid fa-gamepad mr-1"></i> ASESMEN SUMATIF HARIAN</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 mt-1">Kuis Interaktif IPAS (25 Soal Bergambar)</h2>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div id="livesDisplay" class="flex items-center space-x-1 text-rose-500 text-lg" title="Sisa Nyawa">
+              <i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i>
+            </div>
+            <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl font-extrabold text-sm border border-emerald-200">
+              Poin: <span id="currentScore">0</span>
+            </div>
+          </div>
+        </div>
 
-            document.querySelectorAll('.materi-tab-btn').forEach(b => {
-                b.classList.remove('bg-emerald-600', 'text-white', 'shadow');
-                b.classList.add('bg-slate-100', 'text-slate-600');
-            });
-            event.target.classList.remove('bg-slate-100', 'text-slate-600');
-            event.target.classList.add('bg-emerald-600', 'text-white', 'shadow');
-        }
+        <!-- Question Box -->
+        <div id="questionBox" class="space-y-6">
+          <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+            <span id="questionProgress">SOAL 1 DARI 25</span>
+            <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md"><i class="fa-solid fa-shuffle mr-1"></i> OPSI & SOAL DIACAK</span>
+          </div>
 
-        let studentName = "";
+          <!-- Card Soal Bergambar -->
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+            <div id="questionIconBox" class="w-24 h-24 bg-white rounded-2xl shadow-sm border border-slate-200 flex items-center justify-center text-emerald-600 text-4xl shrink-0">
+              <i class="fa-solid fa-feather"></i>
+            </div>
+            <div class="flex-grow space-y-2 text-center md:text-left">
+              <h3 id="questionText" class="text-base sm:text-lg font-bold text-slate-800">Memuat pertanyaan...</h3>
+            </div>
+          </div>
 
-        function registerStudent() {
-            const input = document.getElementById('studentNameInput').value.trim();
-            if(!input) {
-                alert('Mohon masukkan nama lengkap siswa terlebih dahulu!');
-                return;
-            }
-            studentName = input;
-            playSound('correct');
-            document.getElementById('studentGreeting').classList.remove('hidden');
-            document.getElementById('displayNameBadge').innerText = studentName;
-            alert(`Selamat datang, ${studentName}! Silakan buka tab Kuis atau Materi untuk memulai.`);
-        }
+          <!-- Pilihan Jawaban (A, B, C, D) -->
+          <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Diisi JavaScript -->
+          </div>
+        </div>
 
-        const rawQuizData = [
-            {
-                question: "1. Komponen ekosistem yang bertindak sebagai pembuat makanan sendiri melalui proses fotosintesis adalah...",
-                icon: "fa-seedling",
-                iconColor: "text-emerald-500",
-                options: ["Produsen (Tumbuhan)", "Konsumen Tingkat I", "Konsumen Puncak", "Pengurai / Dekomposer"],
-                correctIndex: 0,
-                explanation: "Produsen seperti tumbuhan hijau membuat makanan sendiri menggunakan energi matahari melalui fotosintesis."
-            },
-            {
-                question: "2. Hewan pada gambar di bawah ini tergolong ke dalam konsumen tingkat I (Herbivora) karena...",
-                icon: "fa-locust",
-                iconColor: "text-emerald-600",
-                options: ["Memakan tumbuhan hijau secara langsung", "Memakan daging hewan lain", "Menguraikan sisa bangkai", "Membuat makanan sendiri"],
-                correctIndex: 0,
-                explanation: "Belalang memakan daun tumbuhan secara langsung sehingga berperan sebagai Konsumen I (Herbivora)."
-            },
-            {
-                question: "3. Dalam rantai makanan sawah: Padi ➔ Tikus ➔ Ular ➔ Elang. Posisi Ular adalah sebagai...",
-                icon: "fa-staff-snake",
-                iconColor: "text-amber-600",
-                options: ["Konsumen Tingkat II (Karnivora)", "Produsen utama", "Konsumen Tingkat I", "Pengurai tanah"],
-                correctIndex: 0,
-                explanation: "Ular memangsa tikus (Konsumen I), sehingga ular berperan sebagai Konsumen II."
-            },
-            {
-                question: "4. Gambar di bawah ini merupakan organisme pengurai (dekomposer) yang berfungsi untuk...",
-                icon: "fa-bacteria",
-                iconColor: "text-purple-500",
-                options: ["Menguraikan bangkai makhluk hidup menjadi zat hara tanah", "Membuat energi dari fotosintesis", "Memangsa herbivora di hutan", "Menghasilkan oksigen bagi lingkungan"],
-                correctIndex: 0,
-                explanation: "Pengurai seperti jamur dan bakteri menguraikan bangkai makhluk hidup mati menjadi zat nutrisi hara bagi tanah."
-            },
-            {
-                question: "5. Urutan perpindahan energi makanan dari satu makhluk hidup ke makhluk hidup lainnya dinamakan...",
-                icon: "fa-bolt",
-                iconColor: "text-amber-400",
-                options: ["Aliran Energi Rantai Makanan", "Fotosintesis Lingkungan", "Dekomposisi Tanah", "Metamorfosis Hewan"],
-                correctIndex: 0,
-                explanation: "Aliran energi merupakan proses berlanjutnya perpindahan energi saat peristiwa makan dan dimakan terjadi."
-            },
-            {
-                question: "6. Pada piramida makanan, posisi bagian paling dasar ditempati oleh...",
-                icon: "fa-mountain",
-                iconColor: "text-teal-600",
-                options: ["Produsen dengan jumlah terbanyak", "Konsumen puncak", "Karnivora besar", "Pengurai mikroba"],
-                correctIndex: 0,
-                explanation: "Dasar piramida makanan selalu diisi produsen yang memiliki jumlah biomassa dan energi terbesar."
-            },
-            {
-                question: "7. Kumpulan dari beberapa rantai makanan yang saling terhubung di suatu ekosistem disebut...",
-                icon: "fa-network-wired",
-                iconColor: "text-cyan-600",
-                options: ["Jaring-jaring Makanan", "Piramida Ekosistem", "Simbiosis Parasitisme", "Siklus Air"],
-                correctIndex: 0,
-                explanation: "Jaring-jaring makanan terbentuk karena satu jenis hewan dapat memangsa atau dimangsa lebih dari satu jenis organisme."
-            },
-            {
-                question: "8. Jika populasi katak di sawah menurun drastis karena diburu, maka populasi belalang akan...",
-                icon: "fa-frog",
-                iconColor: "text-emerald-600",
-                options: ["Meningkat pesat karena pemangsanya berkurang", "Pasti langsung punah", "Tidak mengalami perubahan", "Berubah menjadi produsen"],
-                correctIndex: 0,
-                explanation: "Katak adalah pemangsa belalang. Jika katak berkurang, belalang akan berkembang berkembang pesat tanpa kendali."
-            },
-            {
-                question: "9. Fitoplankton dalam ekosistem laut berperan penting sebagai...",
-                icon: "fa-water",
-                iconColor: "text-blue-500",
-                options: ["Produsen utama di laut", "Konsumen puncak laut", "Pengurai bangkai hiu", "Karnivora laut"],
-                correctIndex: 0,
-                explanation: "Fitoplankton adalah tumbuhan mikroskopis di laut yang berfotosintesis dan bertindak sebagai produsen utama."
-            },
-            {
-                question: "10. Contoh hewan pembuat/konsumen tingkat puncak yang tidak dimangsa hewan lain adalah...",
-                icon: "fa-crow",
-                iconColor: "text-slate-700",
-                options: ["Burung Elang / Burung Hantu", "Kelinci", "Belalang", "Katak Pohon"],
-                correctIndex: 0,
-                explanation: "Burung Elang merupakan contoh konsumen puncak yang berada di tingkat paling atas rantai makanan."
-            },
-            {
-                question: "11. Cahaya matahari, air, udara, dan tanah dalam ekosistem dikategorikan sebagai komponen...",
-                icon: "fa-sun",
-                iconColor: "text-amber-500",
-                options: ["Abiotik (Benda Tak Hidup)", "Biotik (Makhluk Hidup)", "Pengurai Organik", "Konsumen Sekunder"],
-                correctIndex: 0,
-                explanation: "Komponen abiotik adalah faktor-faktor non-hayati (tak hidup) yang menunjang kelangsungan ekosistem."
-            },
-            {
-                question: "12. Hewan yang memakan tumbuhan sekaligus daging (pemakan segala) dinamakan...",
-                icon: "fa-shield-cat",
-                iconColor: "text-rose-500",
-                options: ["Omnivora", "Herbivora", "Karnivora", "Dekomposer"],
-                correctIndex: 0,
-                explanation: "Omnivora adalah organisme pemakan segala, baik bahan tumbuhan maupun hewan lain (misal: ayam, tikus, manusia)."
-            },
-            {
-                question: "13. Dalam ekosistem kebun: Tanaman Tomat ➔ Ulat ➔ Burung Kecil ➔ Kucing. Peran Burung Kecil adalah...",
-                icon: "fa-feather",
-                iconColor: "text-teal-500",
-                options: ["Konsumen II", "Produsen", "Konsumen I", "Pengurai"],
-                correctIndex: 0,
-                explanation: "Burung kecil memakan ulat (Konsumen I), sehingga burung kecil berkedudukan sebagai Konsumen II."
-            },
-            {
-                question: "14. Mengapa jumlah energi semakin berkurang pada tingkat piramida yang lebih tinggi?",
-                icon: "fa-chart-line",
-                iconColor: "text-rose-500",
-                options: ["Sebagian energi terbuang sebagai panas & aktivitas hidup", "Tumbuhan tidak membagikan energinya", "Hewan puncak tidak butuh energi", "Matahari tidak menyinari konsumen"],
-                correctIndex: 0,
-                explanation: "Hanya sekitar 10% energi yang berhasil diteruskan, sisanya terbuang sebagai panas respirasi dan ekskresi."
-            },
-            {
-                question: "15. Penebangan hutan secara liar dapat merusak ekosistem karena dapat menyebabkan...",
-                icon: "fa-tree",
-                iconColor: "text-amber-700",
-                options: ["Hilangnya habitat dan produsen makanan", "Bertambahnya jumlah tumbuhan hijau", "Semakin suburnya tanah hutan", "Semakin tingginya populasi herbivora"],
-                correctIndex: 0,
-                explanation: "Penebangan hutan menghancurkan sumber produsen utama serta tempat tinggal berbagai makhluk hidup."
-            },
-            {
-                question: "16. Zooplankton di dalam rantai makanan ekosistem laut menduduki posisi sebagai...",
-                icon: "fa-fish",
-                iconColor: "text-cyan-500",
-                options: ["Konsumen Tingkat I", "Produsen Laut", "Konsumen Puncak", "Pengurai Dasar Laut"],
-                correctIndex: 0,
-                explanation: "Zooplankton memakan fitoplankton (produsen), sehingga bertindak sebagai Konsumen I di laut."
-            },
-            {
-                question: "17. Zat mineral hasil penguraian bangkai oleh dekomposer sangat berguna bagi...",
-                icon: "fa-leaf",
-                iconColor: "text-emerald-600",
-                options: ["Kesuburan tanah untuk produsen (tumbuhan)", "Konsumen puncak", "Karnivora laut", "Matahari"],
-                correctIndex: 0,
-                explanation: "Hasil penguraian mengembalikan unsur hara ke dalam tanah yang sangat dibutuhkan tumbuhan untuk tumbuh."
-            },
-            {
-                question: "18. Manakah urutan rantai makanan yang BENAR di ekosistem kolam?",
-                icon: "fa-droplet",
-                iconColor: "text-blue-600",
-                options: ["Teratai ➔ Ulat Air ➔ Ikan Kecil ➔ Burung Bangau", "Ikan Besar ➔ Teratai ➔ Burung Bangau", "Pengurai ➔ Teratai ➔ Ikan Besar", "Burung Bangau ➔ Ikan Kecil ➔ Teratai"],
-                correctIndex: 0,
-                explanation: "Urutan yang tepat diawali produsen (Teratai), Konsumen I (Ulat Air), Konsumen II (Ikan Kecil), lalu Bangau."
-            },
-            {
-                question: "19. Apabila penggunaan pestisida kimia dilakukan berlebihan oleh petani, dampak buruknya adalah...",
-                icon: "fa-flask",
-                iconColor: "text-purple-600",
-                options: ["Membunuh serangga menguntungkan dan mencemari tanah", "Tanah menjadi semakin subur selamanya", "Produsen padi langsung berbuah emas", "Semua hewan berkembang lebih cepat"],
-                correctIndex: 0,
-                explanation: "Pestisida berlebihan merusak rantai makanan dengan membunuh organisme netral/menguntungkan dan mencemari lingkungan."
-            },
-            {
-                question: "20. Hewan karnivora mendapatkan energi utamanya secara tidak langsung dari...",
-                icon: "fa-sun",
-                iconColor: "text-amber-400",
-                options: ["Matahari via jaringan makanan produsen & herbivora", "Pengurai di tanah", "Batu dan angin", "Bangkai yang dikubur"],
-                correctIndex: 0,
-                explanation: "Semua energi awalnya berasal dari matahari yang ditangkap produsen lalu mengalir melalui tingkatan konsumen."
-            },
-            {
-                question: "21. Suatu ekosistem dikatakan seimbang apabila...",
-                icon: "fa-scale-balanced",
-                iconColor: "text-emerald-700",
-                options: ["Jumlah produsen lebih banyak daripada konsumen", "Jumlah konsumen puncak lebih banyak dari produsen", "Tidak ada pengurai sama sekali", "Hanya ada hewan karnivora saja"],
-                correctIndex: 0,
-                explanation: "Agar seimbang, jumlah produsen harus selalu paling melimpah untuk mampu menyuplai makanan bagi seluruh konsumen."
-            },
-            {
-                question: "22. Ikan besar yang memakan ikan kecil di laut dikelompokkan ke dalam kelompok...",
-                icon: "fa-fish-fins",
-                iconColor: "text-teal-700",
-                options: ["Karnivora (Pemakan Daging)", "Herbivora (Pemakan Tumbuhan)", "Produsen Laut", "Dekomposer Organik"],
-                correctIndex: 0,
-                explanation: "Ikan besar memakan sesama hewan (ikan kecil) sehingga tergolong ke dalam karnivora."
-            },
-            {
-                question: "23. Peristiwa erupsi gunung berapi merupakan contoh perubahan ekosistem yang disebabkan oleh...",
-                icon: "fa-volcano",
-                iconColor: "text-rose-600",
-                options: ["Faktor Bencana Alam", "Ulah sengaja manusia", "Kegiatan pencemaran limbah", "Penggunaan pupuk buatan"],
-                correctIndex: 0,
-                explanation: "Erupsi gunung berapi adalah perubahan kondisi lingkungan secara alami akibat fenomena alam."
-            },
-            {
-                question: "24. Sisa makanan atau dedaunan busuk yang diuraikan oleh cacing tanah akan berubah menjadi...",
-                icon: "fa-worm",
-                iconColor: "text-amber-700",
-                options: ["Humus tanah yang kaya nutrisi", "Pestisida racun", "Batu karang keras", "Plastik sintesis"],
-                correctIndex: 0,
-                explanation: "Cacing tanah dan dekomposer membantu mengubah bahan organik mati menjadi humus tanah yang subur."
-            },
-            {
-                question: "25. Mengapa manusia harus menjaga keanekaragaman hayati dalam ekosistem?",
-                icon: "fa-earth-asia",
-                iconColor: "text-emerald-600",
-                options: ["Agar jaring-jaring makanan dan kelangsungan hidup bumi tetap stabil", "Agar hewan pemangsa habis", "Agar tidak ada lagi hujan", "Agar tanah menjadi kering"],
-                correctIndex: 0,
-                explanation: "Menjaga keanekaragaman menjamin kestabilan jaring-jaring makanan dan daya tahan lingkungan bumi."
-            }
-        ];
+        <!-- Penjelasan / Pembahasan Box (Hidden by default) -->
+        <div id="explanationBox" class="hidden bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-3">
+          <div class="flex items-center space-x-2 text-amber-800 font-bold text-sm">
+            <i class="fa-solid fa-circle-info text-amber-600"></i>
+            <span id="explanationTitle">Pembahasan Jawaban</span>
+          </div>
+          <p id="explanationText" class="text-xs sm:text-sm text-slate-700 leading-relaxed"></p>
+          <button onclick="nextQuizQuestion()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition text-sm flex items-center space-x-2">
+            <span>Lanjut Soal Berikutnya</span><i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
 
-        let quizData = [];
-        let currentQuestion = 0;
-        let score = 0;
-        let lives = 3;
-        let isAnswerLocked = false;
+      </div>
 
-        function shuffleArray(array) {
-            let arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
+      <!-- Hasil Kuis / Sertifikat Box (Hidden by default) -->
+      <div id="quizResultBox" class="hidden bg-white rounded-3xl p-8 shadow-lg border border-emerald-100 text-center space-y-6">
+        <div class="w-20 h-20 bg-emerald-100 text-emerald-600 text-4xl rounded-full flex items-center justify-center mx-auto shadow-inner">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <div class="space-y-2">
+          <h2 id="resultTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-800">Kuis Selesai!</h2>
+          <p id="resultDesc" class="text-slate-600 text-sm sm:text-base max-w-lg mx-auto"></p>
+          <div class="text-3xl font-black text-emerald-600 pt-2" id="finalScoreText">Total Poin: 0</div>
+        </div>
+        <div class="flex justify-center gap-4 flex-wrap pt-4">
+          <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl transition">
+            <i class="fa-solid fa-rotate-right mr-2"></i>Ulangi Kuis
+          </button>
+          <button id="certClaimBtn" onclick="openCertificateModal()" class="hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center space-x-2">
+            <i class="fa-solid fa-certificate"></i><span>Unduh Sertifikat Resmi</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
-        function initQuizData() {
-            quizData = rawQuizData.map(q => {
-                const originalCorrectText = q.options[q.correctIndex];
-                const shuffledOpts = shuffleArray(q.options);
-                const newCorrectIdx = shuffledOpts.indexOf(originalCorrectText);
-                return {
-                    ...q,
-                    options: shuffledOpts,
-                    correctIndex: newCorrectIdx
-                };
-            });
-            quizData = shuffleArray(quizData);
-        }
+    <!-- TAB MINI GAME (ACAK GAMBAR MEMORY) -->
+    <section id="tab-minigame" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+        <div class="flex justify-between items-center flex-wrap gap-4 border-b pb-4">
+          <div>
+            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full"><i class="fa-solid fa-brain mr-1"></i> MINI GAME EDUKASI</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 mt-1">Game Acak & Cocokkan Gambar Ekosistem</h2>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl font-bold text-sm">
+              Skor Memori: <span id="memoryScore">0</span>
+            </div>
+            <button onclick="initMemoryGame()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow text-sm transition">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Acak Ulang
+            </button>
+          </div>
+        </div>
 
-        function loadQuizQuestion() {
-            if (currentQuestion >= quizData.length || lives <= 0) {
-                endQuiz(lives > 0);
-                return;
-            }
+        <p class="text-slate-600 text-sm">Balik kartu dan temukan pasangan gambar komponen ekosistem yang sama untuk melatih daya ingatmu!</p>
 
-            isAnswerLocked = false;
-            const q = quizData[currentQuestion];
-            document.getElementById('questionProgress').innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
-            document.getElementById('questionText').innerText = q.question;
-            
-            const visualEl = document.getElementById('questionVisual');
-            visualEl.innerHTML = `<i class="fa-solid ${q.icon} ${q.iconColor}"></i>`;
+        <!-- Grid Kartu Memori -->
+        <div id="memoryGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto py-4">
+          <!-- Diisi JS -->
+        </div>
+      </div>
+    </section>
 
-            document.getElementById('explanationBox').classList.add('hidden');
+    <!-- TAB DASHBOARD GURU -->
+    <section id="tab-dashboard" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+        <div class="flex justify-between items-center flex-wrap gap-4 border-b pb-4">
+          <div>
+            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full"><i class="fa-solid fa-lock mr-1"></i> AREA GURU</span>
+            <h2 class="text-2xl font-extrabold text-slate-800 mt-1">Dashboard Pemantauan Nilai Siswa</h2>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg">Status: Terhubung Firebase (Real-time)</span>
+            <button onclick="refreshTeacherData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-sm shadow transition">
+              <i class="fa-solid fa-rotate mr-1"></i> Segarkan Data
+            </button>
+          </div>
+        </div>
 
-            const optionsContainer = document.getElementById('quizOptions');
-            optionsContainer.innerHTML = '';
+        <p class="text-slate-600 text-sm">Data pengerjaan kuis siswa dari seluruh perangkat akan masuk dan diperbarui secara langsung (*real-time*):</p>
 
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "quiz-opt-btn bg-white hover:bg-emerald-50 text-slate-700 font-semibold p-4 rounded-2xl border border-slate-200 shadow-sm transition text-left flex items-center space-x-3";
-                btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center font-bold text-slate-600 flex-shrink-0">${String.fromCharCode(65 + idx)}</span><span class="text-sm">${opt}</span>`;
-                btn.onclick = () => checkAnswer(idx, q.correctIndex, q.explanation);
-                optionsContainer.appendChild(btn);
-            });
-            updateLivesDisplay();
-        }
+        <!-- Tabel Siswa -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-bold tracking-wider">
+                <th class="px-4 py-3">Nama Siswa</th>
+                <th class="px-4 py-3">Poin Kuis</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Waktu Pengerjaan</th>
+                <th class="px-4 py-3">Detail (Benar / Salah)</th>
+              </tr>
+            </thead>
+            <tbody id="teacherTableBody" class="text-sm divide-y divide-slate-200 bg-white">
+              <tr>
+                <td colspan="5" class="text-center py-6 text-slate-400">Memuat data dari Firebase...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
-        function updateLivesDisplay() {
-            const container = document.getElementById('livesContainer');
-            let html = '';
-            for(let i=0; i<3; i++) {
-                if(i < lives) {
-                    html += '<i class="fa-solid fa-heart text-rose-500 animate-pulse"></i>';
-                } else {
-                    html += '<i class="fa-regular fa-heart text-slate-300"></i>';
-                }
-            }
-            container.innerHTML = html;
-        }
+  </main>
 
-        function checkAnswer(selected, correct, explanation) {
-            if(isAnswerLocked) return;
-            isAnswerLocked = true;
+  <!-- MODAL SERTIFIKAT -->
+  <div id="certificateModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl border-4 border-emerald-500 space-y-6 text-center relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-bl-2xl">RESMI GIGA INOVATION</div>
+      <div class="space-y-2 border-b pb-4">
+        <h3 class="text-xs uppercase font-bold text-emerald-600 tracking-widest">Sertifikat Kelulusan Kuis IPAS</h3>
+        <h2 class="text-3xl font-extrabold text-slate-800">Penghargaan Prestasi Belajar</h2>
+        <p class="text-xs text-slate-500">Diberikan dengan bangga kepada:</p>
+      </div>
+      <div class="py-4">
+        <div id="certStudentName" class="text-3xl font-black text-emerald-700 underline underline-offset-8 decoration-amber-400">Nama Siswa</div>
+        <p class="text-slate-600 text-sm mt-4">Atas keberhasilan menyelesaikan 25 Soal Kuis Rantai Makanan & Ekosistem Kelas 5 SD dengan hasil sangat memuaskan!</p>
+        <div class="mt-4 inline-block bg-emerald-50 border border-emerald-200 text-emerald-800 px-6 py-2 rounded-xl font-bold text-lg" id="certScoreDisplay">
+          Poin: 100 / 100
+        </div>
+      </div>
+      <div class="flex justify-between items-center pt-4 border-t text-xs text-slate-500">
+        <div>Pengembang: <strong>Giga Inovation</strong> (081329200985)</div>
+        <div class="flex gap-3">
+          <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition">Cetak / Simpan PDF</button>
+          <button onclick="closeCertificate()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2.5 rounded-xl transition">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            const buttons = document.querySelectorAll('.quiz-opt-btn');
-            buttons.forEach((btn, idx) => {
-                btn.disabled = true;
-                if(idx === correct) {
-                    btn.classList.remove('bg-white', 'hover:bg-emerald-50');
-                    btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
-                } else if(idx === selected && selected !== correct) {
-                    btn.classList.remove('bg-white', 'hover:bg-emerald-50');
-                    btn.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900');
-                }
-            });
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500 space-y-1">
+    <p>Ecosystem Explorer IPAS Kelas 5 SD / MI - Kurikulum Merdeka</p>
+    <p class="font-semibold text-emerald-700">Pengembang: Giga Inovation | Kontak: 081329200985</p>
+  </footer>
 
-            const expBox = document.getElementById('explanationBox');
-            const expText = document.getElementById('explanationText');
-            expBox.classList.remove('hidden');
+  <!-- Firebase SDK & Database Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, doc, setDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            if(selected === correct) {
-                playSound('correct');
-                score += 4; // 25 questions * 4 = 100 max score
-                document.getElementById('quizScore').innerText = Math.round(score);
-                document.getElementById('explanationTitle').innerText = "Jawaban Benar! 🎉";
-                expText.innerText = explanation;
-            } else {
-                playSound('wrong');
-                lives--;
-                updateLivesDisplay();
-                document.getElementById('explanationTitle').innerText = "Jawaban Kurang Tepat! ❌ (Nyawa -1)";
-                expText.innerText = `Jawaban yang benar adalah Pilihan ${String.fromCharCode(65 + correct)}. ${explanation}`;
-            }
-        }
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHHDzwNfihkb-0a9afub4ay1VHldfsUQ",
+      authDomain: "rantaimakanan.firebaseapp.com",
+      projectId: "rantaimakanan",
+      storageBucket: "rantaimakanan.firebasestorage.app",
+      messagingSenderId: "927435402933",
+      appId: "1:927435402933:web:5e37e99abf29b0ad8358fc",
+      measurementId: "G-SQ4EVDZQKL"
+    };
 
-        function nextQuizQuestion() {
-            playSound('click');
-            currentQuestion++;
-            loadQuizQuestion();
-        }
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        function endQuiz(success) {
-            document.getElementById('quizBox').classList.add('hidden');
-            document.getElementById('quizResultBox').classList.remove('hidden');
-            const finalScoreRounded = Math.round(score);
-
-            const resultTitle = document.getElementById('resultTitle');
-            const finalScoreText = document.getElementById('finalScoreText');
-            const resultDesc = document.getElementById('resultDesc');
-            const certBtn = document.getElementById('certClaimBtn');
-
-            finalScoreText.innerText = `Total Poin Kamu: ${finalScoreRounded} / 100`;
-
-            if(success && lives > 0) {
-                playSound('win');
-                resultTitle.innerText = "Luar Biasa! Kuis 25 Soal Berhasil Dituntaskan!";
-                resultDesc.innerText = "Selamat! Kamu berhasil menjawab seluruh soal kuis ekosistem dengan sukses. Sertifikat resmi siap diunduh atas namamu!";
-                certBtn.classList.remove('hidden');
-            } else {
-                playSound('wrong');
-                resultTitle.innerText = "Game Over! Nyawa Habis";
-                resultDesc.innerText = "Nyawa kamu habis sebelum menyelesaikan 25 soal. Pelajari kembali materi ekosistem dan coba ulangi kuisnya!";
-                certBtn.classList.add('hidden');
-            }
-
-            saveScoreToFirebase(finalScoreRounded, success && lives > 0);
-        }
-
-        function restartQuiz() {
-            playSound('click');
-            currentQuestion = 0;
-            score = 0;
-            lives = 3;
-            isAnswerLocked = false;
-            document.getElementById('quizScore').innerText = '0';
-            document.getElementById('quizBox').classList.remove('hidden');
-            document.getElementById('quizResultBox').classList.add('hidden');
-            initQuizData();
-            loadQuizQuestion();
-        }
-
-        const memoryItems = [
-            { id: 1, name: 'Tumbuhan', icon: 'fa-seedling', color: 'text-emerald-500' },
-            { id: 2, name: 'Matahari', icon: 'fa-sun', color: 'text-amber-400' },
-            { id: 3, name: 'Belalang', icon: 'fa-locust', color: 'text-emerald-600' },
-            { id: 4, name: 'Katak', icon: 'fa-frog', color: 'text-teal-600' },
-            { id: 5, name: 'Ular', icon: 'fa-staff-snake', color: 'text-amber-600' },
-            { id: 6, name: 'Pengurai', icon: 'fa-bacteria', color: 'text-purple-500' }
-        ];
-
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let moves = 0;
-        let memoryLocked = false;
-
-        function initMemoryGame() {
-            playSound('click');
-            const grid = document.getElementById('memoryGrid');
-            grid.innerHTML = '';
-            flippedCards = [];
-            matchedPairs = 0;
-            moves = 0;
-            memoryLocked = false;
-            document.getElementById('memoryMoves').innerText = '0';
-            document.getElementById('memoryMatches').innerText = '0 / 6';
-
-            const deck = shuffleArray([...memoryItems, ...memoryItems]);
-            
-            deck.forEach((item, idx) => {
-                const card = document.createElement('div');
-                card.className = "memory-card h-28 cursor-pointer select-none";
-                card.dataset.id = item.id;
-                card.dataset.index = idx;
-
-                card.innerHTML = `
-                    <div class="memory-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
-                        <div class="memory-card-front absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
-                            <i class="fa-solid fa-leaf"></i>
-                        </div>
-                        <div class="memory-card-back absolute inset-0 bg-slate-50 rounded-2xl border border-emerald-200 flex flex-col items-center justify-center p-2 text-center">
-                            <i class="fa-solid ${item.icon} ${item.color} text-3xl mb-1"></i>
-                            <span class="text-[10px] font-bold text-slate-700">${item.name}</span>
-                        </div>
-                    </div>
-                `;
-
-                card.onclick = () => flipMemoryCard(card, item);
-                grid.appendChild(card);
-            });
-        }
-
-        function flipMemoryCard(card, item) {
-            if (memoryLocked || card.classList.contains('flipped') || flippedCards.includes(card)) return;
-
-            playSound('click');
-            card.classList.add('flipped');
-            flippedCards.push(card);
-
-            if (flippedCards.length === 2) {
-                moves++;
-                document.getElementById('memoryMoves').innerText = moves;
-                memoryLocked = true;
-
-                const card1 = flippedCards[0];
-                const card2 = flippedCards[1];
-
-                if (card1.dataset.id === card2.dataset.id) {
-                    playSound('correct');
-                    matchedPairs++;
-                    document.getElementById('memoryMatches').innerText = `${matchedPairs} / 6`;
-                    flippedCards = [];
-                    memoryLocked = false;
-
-                    if (matchedPairs === 6) {
-                        setTimeout(() => {
-                            playSound('win');
-                            alert(`Selamat! Kamu berhasil mencocokkan seluruh gambar ekosistem dalam ${moves} langkah! 🎉`);
-                        }, 400);
-                    }
-                } else {
-                    playSound('wrong');
-                    setTimeout(() => {
-                        card1.classList.remove('flipped');
-                        card2.classList.remove('flipped');
-                        flippedCards = [];
-                        memoryLocked = false;
-                    }, 1000);
-                }
-            }
-        }
-
-        function saveScoreToFirebase(finalScore, isPassed) {
-            const currentStudent = studentName || "Siswa Tanpa Nama";
-            const record = {
-                name: currentStudent,
-                score: finalScore,
-                status: isPassed ? "Lulus (Sertifikat)" : "Belum Lulus",
-                time: new Date().toLocaleString('id-ID'),
-                id: 'SESI-' + Math.floor(100000 + Math.random() * 900000)
-            };
-
-            try {
-                let existingRecords = JSON.parse(localStorage.getItem('ecosystem_student_records') || '[]');
-                existingRecords.unshift(record);
-                localStorage.setItem('ecosystem_student_records', JSON.stringify(existingRecords));
-            } catch(e) {
-                console.log('Storage note:', e);
-            }
-        }
-
-        function verifyTeacherPin() {
-            playSound('click');
-            const pin = document.getElementById('teacherPinInput').value;
-            if(pin === '123456') {
-                document.getElementById('pinLockBox').classList.add('hidden');
-                document.getElementById('dashboardContent').classList.remove('hidden');
-                document.getElementById('authStatusBadge').innerText = "Status: Aktif (Akses Diberikan)";
-                document.getElementById('authStatusBadge').className = "text-xs bg-emerald-100 px-3 py-1.5 rounded-lg font-bold text-emerald-700";
-                loadStudentData();
-            } else {
-                playSound('wrong');
-                alert('PIN Guru salah! Gunakan PIN default: 123456');
-            }
-        }
-
-        function loadStudentData() {
-            playSound('click');
-            const tbody = document.getElementById('studentTableBody');
-            try {
-                const records = JSON.parse(localStorage.getItem('ecosystem_student_records') || '[]');
-                if(records.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">Belum ada data siswa yang menyelesaikan kuis.</td></tr>`;
-                    return;
-                }
-                let html = '';
-                records.forEach(r => {
-                    html += `
-                        <tr class="hover:bg-slate-50">
-                            <td class="p-4 font-bold text-slate-800">${r.name}</td>
-                            <td class="p-4 text-emerald-600 font-extrabold">${r.score} / 100</td>
-                            <td class="p-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${r.status.includes('Lulus') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${r.status}</span></td>
-                            <td class="p-4 text-xs text-slate-500">${r.time}</td>
-                            <td class="p-4 text-xs font-mono text-slate-400">${r.id}</td>
-                        </tr>
-                    `;
-                });
-                tbody.innerHTML = html;
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-rose-500">Gagal memuat data lokal.</td></tr>`;
-            }
-        }
-
-        function openCertificate() {
-            playSound('win');
-            document.getElementById('certStudentName').innerText = studentName || "Siswa Teladan";
-            document.getElementById('certScore').innerText = Math.round(score);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('certDate').innerText = new Date().toLocaleDateString('id-ID', options);
-            document.getElementById('certificateModal').classList.remove('hidden');
-            document.getElementById('certificateModal').classList.add('flex');
-        }
-
-        function closeCertificate() {
-            playSound('click');
-            document.getElementById('certificateModal').classList.remove('flex');
-            document.getElementById('certificateModal').classList.add('hidden');
-        }
-
-        window.onload = () => {
-            initQuizData();
-            loadQuizQuestion();
-        };
-    </script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAHHDzwNfihkb-0a9afub4ay1VHldfsUQ",
-    authDomain: "rantaimakanan.firebaseapp.com",
-    projectId: "rantaimakanan",
-    storageBucket: "rantaimakanan.firebasestorage.app",
-    messagingSenderId: "927435402933",
-    appId: "1:927435402933:web:5e37e99abf29b0ad8358fc",
-    measurementId: "G-SQ4EVDZQKL"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Buat ID unik per sesi siswa
-  if(!window.studentSessionId) {
-    window.studentSessionId = 'SISWA_' + Date.now();
-  }
-
-  // 1. Simpan & Update Skor Siswa Secara Real-time di setiap pergerakan kuis
-  window.saveScoreToFirebase = async function(studentName, score, correctCount, wrongCount, status = "Sedang Mengerjakan") {
-    try {
-      await setDoc(doc(db, "student_scores", window.studentSessionId), {
-        name: studentName,
-        score: score,
-        correct: correctCount,
-        wrong: wrongCount,
-        status: status,
-        timestamp: new Date()
-      }, { merge: true });
-      console.log("Data real-time tersimpan!");
-    } catch (e) {
-      console.error("Gagal update real-time:", e);
+    if(!window.studentSessionId) {
+      window.studentSessionId = 'SISWA_' + Date.now();
     }
-  };
 
-  // 2. Pantau Data Guru Secara Live / Real-time (Auto-refresh tanpa klik)
-  window.listenToStudentScores = function(callback) {
-    const q = query(collection(db, "student_scores"), orderBy("timestamp", "desc"));
-    return onSnapshot(q, (snapshot) => {
-      let scores = [];
-      snapshot.forEach((doc) => {
-        scores.push(doc.data());
+    window.saveScoreToFirebase = async function(studentName, score, correctCount, wrongCount, status = "Sedang Mengerjakan") {
+      try {
+        await setDoc(doc(db, "student_scores", window.studentSessionId), {
+          name: studentName,
+          score: score,
+          correct: correctCount,
+          wrong: wrongCount,
+          status: status,
+          timestamp: new Date()
+        }, { merge: true });
+      } catch (e) {
+        console.error("Gagal simpan:", e);
+      }
+    };
+
+    window.listenToStudentScores = function(callback) {
+      const q = query(collection(db, "student_scores"), orderBy("timestamp", "desc"));
+      return onSnapshot(q, (snapshot) => {
+        let scores = [];
+        snapshot.forEach((doc) => { scores.push(doc.data()); });
+        callback(scores);
       });
-      callback(scores);
-    });
-  };
-</script>
-    <script>
-        const manifestData = {
-            "name": "Ecosystem Explorer IPAS Kelas 5",
-            "short_name": "EcosystemIPAS",
-            "start_url": "./index.html",
-            "display": "standalone",
-            "background_color": "#f8fafc",
-            "theme_color": "#059669",
-            "icons": [
-                {"src": "https://placehold.co/192x192/059669/ffffff?text=IPAS", "sizes": "192x192", "type": "image/png"},
-                {"src": "https://placehold.co/512x512/059669/ffffff?text=IPAS", "sizes": "512x512", "type": "image/png"}
-            ]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifestData, null, 2)], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        const linkTag = document.createElement('link');
-        linkTag.rel = 'manifest';
-        linkTag.href = manifestURL;
-        document.head.appendChild(linkTag);
+    };
+  </script>
 
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', (e) => {
-                    e.waitUntil(
-                        caches.open('ecosystem-v3').then((cache) => {
-                            return cache.addAll(['./index.html']);
-                        })
-                    );
-                });
-                self.addEventListener('fetch', (e) => {
-                    e.respondWith(
-                        caches.match(e.request).then((response) => {
-                            return response || fetch(e.request);
-                        })
-                    );
-                });
-            `;
-            const swBlob = new Blob([swCode], {type: 'text/javascript'});
-            const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration note:', err));
+  <!-- Main App Script -->
+  <script>
+    let soundEnabled = true;
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundText').innerText = soundEnabled ? "Suara: ON" : "Suara: OFF";
+      document.getElementById('soundIcon').className = soundEnabled ? "fa-solid fa-volume-high text-amber-300" : "fa-solid fa-volume-xmark text-slate-300";
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if(type === 'correct') {
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.start(); osc.stop(ctx.currentTime + 0.3);
+        } else if(type === 'wrong') {
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.setValueAtTime(150, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.start(); osc.stop(ctx.currentTime + 0.3);
+        } else {
+          osc.frequency.setValueAtTime(440, ctx.currentTime);
+          gain.gain.setValueAtTime(0.05, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+          osc.start(); osc.stop(ctx.currentTime + 0.1);
         }
-    </script>
+      } catch(e) {}
+    }
+
+    let currentStudentName = "";
+    function registerStudent() {
+      const nameInput = document.getElementById('studentNameInput').value.trim();
+      if (!nameInput) {
+        alert("Silakan masukkan nama lengkap siswa terlebih dahulu!");
+        return;
+      }
+      currentStudentName = nameInput;
+      document.getElementById('displayNameBadge').innerText = currentStudentName;
+      document.getElementById('studentGreeting').classList.remove('hidden');
+      playSound('click');
+      alert("Nama berhasil disimpan! Silakan pilih menu Kuis atau Materi di atas.");
+      if(window.saveScoreToFirebase) {
+        window.saveScoreToFirebase(currentStudentName, 0, 0, 0, "Sedang Mengerjakan");
+      }
+    }
+
+    function switchTab(tabId) {
+      playSound('click');
+      if (tabId === 'dashboard') {
+        const pin = prompt("Masukkan PIN Guru (123456):");
+        if (pin !== "123456") {
+          alert("PIN Salah! Akses ditolak.");
+          return;
+        } else {
+          loadTeacherTable();
+        }
+      }
+      document.querySelectorAll('.tab-content').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+    }
+
+    function loadTeacherTable() {
+      if (window.listenToStudentScores) {
+        window.listenToStudentScores((scores) => {
+          const tbody = document.getElementById('teacherTableBody');
+          if (!tbody) return;
+          if (!scores || scores.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400">Belum ada data siswa yang mengerjakan kuis.</td></tr>`;
+            return;
+          }
+          let html = '';
+          scores.forEach(s => {
+            let badgeColor = s.status === 'Selesai' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800';
+            html += `
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-bold text-slate-800">${s.name || 'Tanpa Nama'}</td>
+                <td class="px-4 py-3 font-extrabold text-emerald-600">${s.score || 0}</td>
+                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeColor}">${s.status || 'Sedang Mengerjakan'}</span></td>
+                <td class="px-4 py-3 text-xs text-slate-500">${s.timestamp ? new Date(s.timestamp.seconds * 1000).toLocaleTimeString() : '-'}</td>
+                <td class="px-4 py-3 text-xs font-medium text-slate-600">${s.correct || 0} Benar / ${s.wrong || 0} Salah</td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        });
+      }
+    }
+
+    function refreshTeacherData() {
+      playSound('click');
+      loadTeacherTable();
+      alert("Data berhasil disegarkan!");
+    }
+
+    function setMateriSub(sub) {
+      playSound('click');
+      document.querySelectorAll('.materi-pane').forEach(p => p.classList.add('hidden'));
+      document.getElementById('sub-' + sub).classList.remove('hidden');
+      document.querySelectorAll('.materi-tab-btn').forEach(b => {
+        b.className = "materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
+      });
+      event.target.className = "materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 text-white shadow";
+    }
+
+    // 25 Soal Kuis Interaktif Bergambar & Acak
+    const masterQuizQuestions = [
+      { q: "Makhluk hidup dalam ekosistem yang mampu membuat makanan sendiri melalui proses fotosintesis disebut...", icon: "fa-seedling", options: ["Produsen", "Konsumen I", "Pengurai", "Karnivora"], answer: 0, exp: "Produsen adalah organisme (seperti tumbuhan hijau) yang dapat menghasilkan makanan sendiri melalui fotosintesis." },
+      { q: "Hewan pemakan tumbuhan (herbivora) dalam rantai makanan biasanya menduduki peran sebagai...", icon: "fa-cow", options: ["Konsumen Tingkat I", "Konsumen Tingkat II", "Produsen Utama", "Pengurai"], answer: 0, exp: "Konsumen Tingkat I adalah hewan herbivora yang memakan langsung tumbuhan (produsen)." },
+      { q: "Perhatikan rantai makanan di kebun: Tanaman Tomat → Ulat → Bunglon → Ular → Burung Hantu. Peran burung hantu adalah...", icon: "fa-crow", options: ["Konsumen Puncak", "Produsen", "Konsumen Tingkat I", "Pengurai"], answer: 0, exp: "Burung hantu berada di urutan teratas rantai makanan tersebut dan tidak dimangsa hewan lain, sehingga menjadi konsumen puncak." },
+      { q: "Jamur dan bakteri di dalam tanah pada rantai makanan berfungsi sebagai...", icon: "fa-mushrooms", options: ["Pengurai (Dekomposer)", "Produsen", "Konsumen Puncak", "Sumber Energi Abiotik"], answer: 0, exp: "Pengurai menguraikan sisa makhluk hidup mati menjadi zat hara penyubur tanah." },
+      { q: "Sumber energi utama yang mengawali seluruh rantai makanan di bumi adalah...", icon: "fa-sun", options: ["Cahaya Matahari", "Air Hujan", "Tanah Humus", "Udara Bersih"], answer: 0, exp: "Cahaya matahari adalah sumber energi utama yang dimanfaatkan tumbuhan untuk berfotosintesis." },
+      { q: "Kumpulan dari beberapa rantai makanan yang saling berhubungan dan kompleks di dalam ekosistem disebut...", icon: "fa-network-wired", options: ["Jaring-jaring Makanan", "Piramida Makanan", "Habitat Tunggal", "Komponen Abiotik"], answer: 0, exp: "Jaring-jaring makanan adalah gabungan dari berbagai rantai makanan yang saling terhubung." },
+      { q: "Pada piramida makanan, jumlah energi dan jumlah populasi terbanyak umumnya terdapat pada tingkat...", icon: "fa-triangle", options: ["Paling bawah (Produsen)", "Tengah (Konsumen II)", "Puncak (Karnivora)", "Semua tingkatan sama"], answer: 0, exp: "Produsen di tingkat bawah memiliki jumlah dan energi terbesar dalam piramida makanan." },
+      { q: "Hewan yang memakan daging maupun tumbuhan (segala) disebut...", icon: "fa-bowl-food", options: ["Omnivora", "Herbivora", "Karnivora", "Dekomposer"], answer: 0, exp: "Omnivora adalah kelompok hewan pemakan segalanya (tumbuhan dan daging)." },
+      { q: "Manakah di bawah ini yang termasuk komponen abiotik dalam ekosistem?", icon: "fa-water", options: ["Air, Tanah, dan Suhu", "Rumput dan Pohon", "Belalang dan Katak", "Jamur dan Bakteri"], answer: 0, exp: "Komponen abiotik adalah komponen benda tak hidup seperti air, tanah, suhu, dan cahaya." },
+      { q: "Jika populasi ular di suatu ekosistem sawah habis karena diburu, maka populasi tikus akan...", icon: "fa-rodent", options: ["Meledak / Bertambah Banyak", "Ikut Punah Seketika", "Tidak Ada Perubahan", "Menjadi Produsen"], answer: 0, exp: "Ular adalah pemangsa tikus. Jika ular habis, tikus tidak ada yang memangsa sehingga populasinya meledak." },
+      { q: "Tanaman padi dimakan belalang, belalang dimakan katak, katak dimakan ular. Hewan yang berperan sebagai konsumen tingkat II adalah...", icon: "fa-frog", options: ["Katak", "Belalang", "Ular", "Padi"], answer: 0, exp: "Padi (Produsen) -> Belalang (Konsumen I) -> Katak (Konsumen II)." },
+      { q: "Aliran energi dalam rantai makanan selalu dimulai dari...", icon: "fa-bolt", options: ["Produsen", "Konsumen Puncak", "Pengurai", "Karnivora"], answer: 0, exp: "Aliran energi dimulai dari tumbuhan hijau sebagai produsen yang menangkap energi matahari." },
+      { q: "Dalam ekosistem kebun: Tanaman Tomat -> Ulat -> Burung Kecil -> Kucing. Peran burung kecil adalah...", icon: "fa-feather-pointed", options: ["Konsumen Tingkat II", "Konsumen Tingkat I", "Pengurai", "Produsen"], answer: 0, exp: "Burung kecil memakan ulat (konsumen I), sehingga burung kecil berkedudukan sebagai konsumen tingkat II." },
+      { q: "Manakah urutan rantai makanan yang benar di ekosistem sawah?", icon: "fa-wheat-awn", options: ["Padi -> Tikus -> Ular -> Elang", "Elang -> Ular -> Tikus -> Padi", "Padi -> Elang -> Tikus -> Ular", "Tikus -> Padi -> Elang -> Ular"], answer: 0, exp: "Padi dimakan tikus, tikus dimakan ular, ular dimakan elang." },
+      { q: "Perhatikan pernyataan: 1) Membuat makanan sendiri. 2) Menempati trofik I. Pernyataan tersebut adalah ciri dari...", icon: "fa-tree", options: ["Produsen", "Konsumen III", "Pengurai", "Karnivora"], answer: 0, exp: "Tumbuhan hijau sebagai produsen dapat membuat makanan sendiri dan berada di tingkat trofik I." },
+      { q: "Apa yang terjadi pada sebagian energi saat berpindah dari satu tingkat trofik ke tingkat di atasnya?", icon: "fa-fire", options: ["Sebagian dilepaskan ke lingkungan sebagai panas", "Semua energi utuh berpindah 100%", "Energi bertambah banyak", "Energi berubah menjadi air"], answer: 0, exp: "Tidak semua energi berpindah; sebagian besar dilepaskan ke lingkungan dalam bentuk panas." },
+      { q: "Hewan pemakan daging murni disebut sebagai...", icon: "fa-meat", options: ["Karnivora", "Herbivora", "Omnivora", "Produsen"], answer: 0, exp: "Karnivora adalah kelompok hewan pemakan daging." },
+      { q: "Interaksi makan dan dimakan yang membentuk jalur bercabang-cabang disebut...", icon: "fa-diagram-project", options: ["Jaring-jaring Makanan", "Rantai Makanan Tunggal", "Piramida Jumlah", "Siklus Air"], answer: 0, exp: "Jaring-jaring makanan adalah gabungan rantai makanan yang bercabang." },
+      { q: "Organisme yang tidak dapat membuat makanan sendiri dan bergantung pada organisme lain disebut...", icon: "fa-paw", options: ["Konsumen", "Produsen", "Tumbuhan Hijau", "Fitoplankton"], answer: 0, exp: "Konsumen adalah organisme heterotrof yang tidak bisa membuat makanan sendiri." },
+      { q: "Manakah contoh hewan yang berperan sebagai Konsumen Tingkat I (Herbivora)?", icon: "fa-rabbit", options: ["Kelinci dan Belalang", "Singa dan Harimau", "Ular dan Elang", "Jamur dan Bakteri"], answer: 0, exp: "Kelinci dan belalang adalah pemangsa tumbuhan (herbivora) sebagai konsumen tingkat I." },
+      { q: "Bangkai makhluk hidup yang diuraikan oleh dekomposer akan berubah menjadi...", icon: "fa-earth-americas", options: ["Zat hara / mineral tanah", "Minyak bumi", "Plastik", "Batu bara"], answer: 0, exp: "Penguraian sisa organik menghasilkan zat hara yang menyuburkan tanah bagi tumbuhan." },
+      { q: "Mengapa jumlah produsen di alam harus lebih banyak daripada konsumen puncak?", icon: "fa-chart-pie", options: ["Untuk mencukupi kebutuhan energi di setiap tingkat trofik", "Agar pemandangan indah", "Karena tumbuhan tidak bisa bergerak", "Karena hewan puncak cepat berkembang biak"], answer: 0, exp: "Karena energi berkurang di setiap tingkat trofik, produsen harus berlimpah untuk menyuplai ekosistem." },
+      { q: "Kegiatan manusia yang dapat merusak keseimbangan jaring-jaring makanan di hutan adalah...", icon: "fa-axe", options: ["Penebangan liar dan perburuan hewan", "Menanam pohon di halaman", "Membuat taman kota", "Membersihkan sampah organik"], answer: 0, exp: "Penebangan liar merusak habitat dan memutus rantai makanan." },
+      { q: "Di ekosistem laut, yang bertindak sebagai produsen utama adalah...", icon: "fa-water", options: ["Fitoplankton", "Ikan Hiu", "Paus Biru", "Ubur-ubur"], answer: 0, exp: "Fitoplankton adalah tumbuhan mikro alga laut yang berfotosintesis sebagai produsen utama." },
+      { q: "Jika seekor elang mati di dalam hutan, tubuhnya akan...", icon: "fa-skull", idioms: "Diuraikan oleh jamur dan bakteri pengurai", options: ["Diuraikan oleh jamur dan bakteri pengurai", "Berubah menjadi batu permata", "Tetap utuh selamanya", "Dimakan oleh tumbuhan padi"], answer: 0, exp: "Tubuh makhluk hidup yang mati akan diuraikan oleh dekomposer kembali menjadi zat hara." }
+    ];
+
+    let quizQuestions = [];
+    let currentQuizIndex = 0;
+    let score = 0;
+    let lives = 3;
+    let correctCounter = 0;
+    let wrongCounter = 0;
+
+    function initQuizData() {
+      quizQuestions = JSON.parse(JSON.stringify(masterQuizQuestions));
+      // Acak urutan soal
+      quizQuestions.sort(() => Math.random() - 0.5);
+    }
+
+    function loadQuizQuestion() {
+      if (lives <= 0 || currentQuizIndex >= quizQuestions.length) {
+        endQuiz(false);
+        return;
+      }
+
+      const qObj = quizQuestions[currentQuizIndex];
+      document.getElementById('questionProgress').innerText = `SOAL ${currentQuizIndex + 1} DARI ${quizQuestions.length}`;
+      document.getElementById('questionText').innerText = qObj.q;
+      document.getElementById('questionIconBox').innerHTML = `<i class="fa-solid ${qObj.icon}"></i>`;
+      document.getElementById('currentScore').innerText = score;
+      updateLivesDisplay();
+
+      document.getElementById('explanationBox').classList.add('hidden');
+
+      // Acak opsi jawaban
+      let optionsWithIndex = qObj.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+      optionsWithIndex.sort(() => Math.random() - 0.5);
+
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = '';
+
+      optionsWithIndex.forEach((item, index) => {
+        const btn = document.createElement('button');
+        btn.className = "option-btn bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 p-4 rounded-2xl text-left font-semibold text-slate-700 transition flex items-center space-x-3 shadow-sm";
+        btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center font-bold text-emerald-600 shrink-0">${String.fromCharCode(65 + index)}</span><span class="flex-grow">${item.text}</span>`;
+        btn.onclick = () => selectQuizAnswer(item.originalIndex === qObj.answer, item.originalIndex, qObj.answer, qObj.exp);
+        grid.appendChild(btn);
+      });
+    }
+
+    function updateLivesDisplay() {
+      let hearts = '';
+      for(let i=0; i<3; i++) {
+        hearts += i < lives ? `<i class="fa-solid fa-heart text-rose-500"></i>` : `<i class="fa-solid fa-heart text-slate-300"></i>`;
+      }
+      document.getElementById('livesDisplay').innerHTML = hearts;
+    }
+
+    function selectQuizAnswer(isCorrect, chosenIdx, correctIdx, explanation) {
+      const optionButtons = document.querySelectorAll('.option-btn');
+      optionButtons.forEach(btn => btn.disabled = true);
+
+      optionButtons.forEach(btn => {
+        // Cek teks untuk mencocokkan
+        if(btn.innerText.includes(quizQuestions[currentQuizIndex].options[correctIdx])) {
+          btn.className = "option-btn bg-emerald-100 border border-emerald-400 p-4 rounded-2xl text-left font-semibold text-emerald-900 flex items-center space-x-3 shadow-sm";
+        }
+      });
+
+      if (isCorrect) {
+        playSound('correct');
+        score += 4; // 25 soal x 4 = 100 poin max
+        correctCounter++;
+        document.getElementById('currentScore').innerText = score;
+        document.getElementById('explanationTitle').innerText = "Jawaban Benar! 🎉";
+        document.getElementById('explanationText').innerText = explanation;
+      } else {
+        playSound('wrong');
+        lives--;
+        wrongCounter++;
+        updateLivesDisplay();
+        document.getElementById('explanationTitle').innerText = "Jawaban Kurang Tepat! ❌ (Nyawa -1)";
+        let correctText = quizQuestions[currentQuizIndex].options[correctIdx];
+        document.getElementById('explanationText').innerText = `Jawaban yang benar adalah: "${correctText}". ${explanation}`;
+      }
+
+      document.getElementById('explanationBox').classList.remove('hidden');
+
+      if (currentStudentName && window.saveScoreToFirebase) {
+        window.saveScoreToFirebase(currentStudentName, score, correctCounter, wrongCounter, "Sedang Mengerjakan");
+      }
+    }
+
+    function nextQuizQuestion() {
+      playSound('click');
+      currentQuizIndex++;
+      if (lives <= 0) {
+        endQuiz(false);
+      } else if (currentQuizIndex >= quizQuestions.length) {
+        endQuiz(true);
+      } else {
+        loadQuizQuestion();
+      }
+    }
+
+    function endQuiz(success) {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('quizResultBox').classList.remove('hidden');
+      
+      const finalScoreRounded = Math.round(score);
+      document.getElementById('finalScoreText').innerText = `Total Poin Kamu: ${finalScoreRounded} / 100`;
+
+      if (success || lives > 0) {
+        playSound('win');
+        document.getElementById('resultTitle').innerText = "Luar Biasa! Kuis Berhasil Dituntaskan!";
+        document.getElementById('resultDesc').innerText = `Selamat ${currentStudentName || 'Siswa'}, kamu berhasil menjawab seluruh soal kuis ekosistem dengan sukses. Sertifikat resmi siap diunduh atas namamu!`;
+        document.getElementById('certClaimBtn').classList.remove('hidden');
+      } else {
+        playSound('wrong');
+        document.getElementById('resultTitle').innerText = "Game Over! Nyawa Habis";
+        document.getElementById('resultDesc').innerText = "Nyawamu habis sebelum menyelesaikan 25 soal. Pelajari kembali materi ekosistem dan coba ulangi kuisnya!";
+        document.getElementById('certClaimBtn').classList.add('hidden');
+      }
+
+      if (currentStudentName && window.saveScoreToFirebase) {
+        window.saveScoreToFirebase(currentStudentName, finalScoreRounded, correctCounter, wrongCounter, "Selesai");
+      }
+    }
+
+    function restartQuiz() {
+      playSound('click');
+      score = 0;
+      lives = 3;
+      currentQuizIndex = 0;
+      correctCounter = 0;
+      wrongCounter = 0;
+      initQuizData();
+      document.getElementById('quizResultBox').classList.add('hidden');
+      document.getElementById('quizContainer').classList.remove('hidden');
+      loadQuizQuestion();
+    }
+
+    function openCertificateModal() {
+      playSound('click');
+      if (!currentStudentName) {
+        currentStudentName = prompt("Masukkan nama lengkap siswa untuk sertifikat:") || "Siswa Teladan";
+      }
+      document.getElementById('certStudentName').innerText = currentStudentName;
+      document.getElementById('certScoreDisplay').innerText = `Poin: ${Math.round(score)} / 100`;
+      document.getElementById('certificateModal').classList.remove('hidden');
+      document.getElementById('certificateModal').classList.add('flex');
+    }
+
+    function closeCertificate() {
+      playSound('click');
+      document.getElementById('certificateModal').classList.remove('flex');
+      document.getElementById('certificateModal').classList.add('hidden');
+    }
+
+    // Mini Game: Memory Card Acak Gambar
+    const memoryIcons = ['fa-tree', 'fa-cow', 'fa-frog', 'fa-sun', 'fa-seedling', 'fa-crow'];
+    let memoryCards = [];
+    let flippedCards = [];
+    let matchedPairs = 0;
+    let memoryScoreVal = 0;
+
+    function initMemoryGame() {
+      playSound('click');
+      matchedPairs = 0;
+      memoryScoreVal = 0;
+      document.getElementById('memoryScore').innerText = memoryScoreVal;
+      
+      let deck = [...memoryIcons, ...memoryIcons];
+      deck.sort(() => Math.random() - 0.5);
+
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+
+      deck.forEach((icon, idx) => {
+        const card = document.createElement('div');
+        card.className = "memory-card w-full h-28 cursor-pointer";
+        card.dataset.icon = icon;
+        card.innerHTML = `
+          <div class="memory-card-inner w-full h-full relative rounded-2xl shadow-sm">
+            <div class="memory-card-front absolute inset-0 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-3xl font-bold shadow"><i class="fa-solid fa-question"></i></div>
+            <div class="memory-card-back absolute inset-0 bg-white border-2 border-emerald-400 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl shadow"><i class="fa-solid ${icon}"></i></div>
+          </div>
+        `;
+        card.onclick = () => flipMemoryCard(card);
+        grid.appendChild(card);
+      });
+    }
+
+    function flipMemoryCard(card) {
+      if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      playSound('click');
+      card.classList.add('flipped');
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        const c1 = flippedCards[0];
+        const c2 = flippedCards[1];
+        if (c1.dataset.icon === c2.dataset.icon) {
+          playSound('correct');
+          c1.classList.add('matched');
+          c2.classList.add('matched');
+          flippedCards = [];
+          matchedPairs++;
+          memoryScoreVal += 20;
+          document.getElementById('memoryScore').innerText = memoryScoreVal;
+          if (matchedPairs === memoryIcons.length) {
+            setTimeout(() => alert("Hebat! Kamu berhasil menyelesaikan game memori ekosistem! 🎉"), 300);
+          }
+        } else {
+          playSound('wrong');
+          setTimeout(() => {
+            c1.classList.remove('flipped');
+            c2.classList.remove('flipped');
+            flippedCards = [];
+          }, 800);
+        }
+      }
+    }
+
+    // PWA Manifest & Service Worker Auto-inject
+    const manifestData = {
+      "name": "Ecosystem Explorer IPAS Kelas 5",
+      "short_name": "EcosystemIPAS",
+      "start_url": "./index.html",
+      "display": "standalone",
+      "background_color": "#f8fafc",
+      "theme_color": "#059669",
+      "icons": [
+        {"src": "https://placehold.co/192x192/059669/ffffff?text=IPAS", "sizes": "192x192", "type": "image/png"},
+        {"src": "https://placehold.co/512x512/059669/ffffff?text=IPAS", "sizes": "512x512", "type": "image/png"}
+      ]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifestData, null, 2)], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    const linkTag = document.createElement('link');
+    linkTag.rel = 'manifest';
+    linkTag.href = manifestURL;
+    document.head.appendChild(linkTag);
+
+    if ('serviceWorker' in navigator) {
+      const swCode = `
+        self.addEventListener('install', (e) => {
+          e.waitUntil(
+            caches.open('ecosystem-v3').then((cache) => {
+              return cache.addAll(['./index.html']);
+            })
+          );
+        });
+        self.addEventListener('fetch', (e) => {
+          e.respondWith(
+            caches.match(e.request).then((res) => res || fetch(e.request))
+          );
+        });
+      `;
+      const swBlob = new Blob([swCode], {type: 'text/javascript'});
+      const swURL = URL.createObjectURL(swBlob);
+      navigator.serviceWorker.register(swURL).catch(() => {});
+    }
+
+    window.onload = () => {
+      initQuizData();
+      loadQuizQuestion();
+      initMemoryGame();
+    };
+  </script>
 </body>
 </html>
