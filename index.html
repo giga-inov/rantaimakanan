@@ -1135,9 +1135,8 @@
     </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Konfigurasi Firebase Anda
   const firebaseConfig = {
     apiKey: "AIzaSyAHHDzwNfihkb-0a9afub4ay1VHldfsUQ",
     authDomain: "rantaimakanan.firebaseapp.com",
@@ -1148,40 +1147,41 @@
     measurementId: "G-SQ4EVDZQKL"
   };
 
-  // Inisialisasi Firebase & Firestore
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Simpan skor siswa ke Firebase
-  window.saveScoreToFirebase = async function(studentName, score, correctCount, wrongCount) {
+  // Buat ID unik per sesi siswa
+  if(!window.studentSessionId) {
+    window.studentSessionId = 'SISWA_' + Date.now();
+  }
+
+  // 1. Simpan & Update Skor Siswa Secara Real-time di setiap pergerakan kuis
+  window.saveScoreToFirebase = async function(studentName, score, correctCount, wrongCount, status = "Sedang Mengerjakan") {
     try {
-      await addDoc(collection(db, "student_scores"), {
+      await setDoc(doc(db, "student_scores", window.studentSessionId), {
         name: studentName,
         score: score,
         correct: correctCount,
         wrong: wrongCount,
+        status: status,
         timestamp: new Date()
-      });
-      console.log("Skor siswa berhasil tersimpan ke Firebase!");
+      }, { merge: true });
+      console.log("Data real-time tersimpan!");
     } catch (e) {
-      console.error("Gagal menyimpan skor:", e);
+      console.error("Gagal update real-time:", e);
     }
   };
 
-  // Ambil data nilai untuk Dashboard Guru
-  window.fetchStudentScoresFromFirebase = async function() {
-    try {
-      const q = query(collection(db, "student_scores"), orderBy("timestamp", "desc"));
-      const querySnapshot = await getDocs(q);
+  // 2. Pantau Data Guru Secara Live / Real-time (Auto-refresh tanpa klik)
+  window.listenToStudentScores = function(callback) {
+    const q = query(collection(db, "student_scores"), orderBy("timestamp", "desc"));
+    return onSnapshot(q, (snapshot) => {
       let scores = [];
-      querySnapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
         scores.push(doc.data());
       });
-      return scores;
-    } catch (e) {
-      console.error("Gagal memuat data dashboard:", e);
-      return [];
-    }
+      callback(scores);
+    });
   };
 </script>
     <script>
