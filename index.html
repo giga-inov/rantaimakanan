@@ -1133,7 +1133,57 @@
             loadQuizQuestion();
         };
     </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // Konfigurasi Firebase Anda
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHHDzwNfihkb-0a9afub4ay1VHldfsUQ",
+    authDomain: "rantaimakanan.firebaseapp.com",
+    projectId: "rantaimakanan",
+    storageBucket: "rantaimakanan.firebasestorage.app",
+    messagingSenderId: "927435402933",
+    appId: "1:927435402933:web:5e37e99abf29b0ad8358fc",
+    measurementId: "G-SQ4EVDZQKL"
+  };
+
+  // Inisialisasi Firebase & Firestore
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Simpan skor siswa ke Firebase
+  window.saveScoreToFirebase = async function(studentName, score, correctCount, wrongCount) {
+    try {
+      await addDoc(collection(db, "student_scores"), {
+        name: studentName,
+        score: score,
+        correct: correctCount,
+        wrong: wrongCount,
+        timestamp: new Date()
+      });
+      console.log("Skor siswa berhasil tersimpan ke Firebase!");
+    } catch (e) {
+      console.error("Gagal menyimpan skor:", e);
+    }
+  };
+
+  // Ambil data nilai untuk Dashboard Guru
+  window.fetchStudentScoresFromFirebase = async function() {
+    try {
+      const q = query(collection(db, "student_scores"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+      let scores = [];
+      querySnapshot.forEach((doc) => {
+        scores.push(doc.data());
+      });
+      return scores;
+    } catch (e) {
+      console.error("Gagal memuat data dashboard:", e);
+      return [];
+    }
+  };
+</script>
     <script>
         const manifestData = {
             "name": "Ecosystem Explorer IPAS Kelas 5",
